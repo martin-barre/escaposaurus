@@ -1,0 +1,491 @@
+/*
+/////////////////////////////////////////////////////////////
+/// Escapausorus v1 (2020)
+///	A quick and dirty framework to create small adventure game (certified vanilla JS)
+/// Author: Stéphanie Mader (http://smader.interaction-project.net)
+/// GitHub: https://github.com/RedNaK/escaposaurus
+///	Licence: MIT
+////////////////////////////////////////////////////////////
+*/
+
+/* by default there is no margin or padding anywhere */
+* {
+  margin: 0px;
+  padding: 0px;
+}
+a {
+  color: #1022cc;
+}
+body {
+  font-family: Arial;
+}
+
+/*on veut la lightbox devant*/
+.lightbox-container {
+  z-index: 302;
+}
+
+video {
+  max-width: 960px;
+}
+
+@font-face {
+  font-family: Roboto;
+  src: url("img/fonts/Roboto/Roboto-Light.ttf") format("truetype");
+}
+@font-face {
+  font-family: Odibee;
+  src: url("img/fonts/Odibee_Sans/OdibeeSans-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: Woodcut;
+  src: url("img/fonts/Woodcut/Woodcut.ttf") format("truetype");
+}
+
+/*size of the countainer defined to fit most used screen resolution*/
+/*main div container*/
+#main-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  position: relative;
+
+  background: url(img/background.jpg);
+  background-position: center;
+  background-color: #1022cc;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#main-game-div {
+  flex: auto;
+}
+
+#main-container-index {
+  max-width: 1300px;
+  max-height: 800px;
+  margin: auto;
+  height: 100%;
+  border: 1px solid #1022cc;
+  text-align: center;
+  position: relative;
+}
+
+#container-homeMission {
+  background-color: white;
+  padding: 20px;
+}
+
+#div-homeMission {
+  background-color: #dcdcdc;
+  border: 2px solid #1022cc;
+  padding: 5px;
+}
+
+#os-name {
+  margin-bottom: 4rem;
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 5px;
+  background-color: #1022cc;
+  font-family: Woodcut;
+}
+
+#normal-contact {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+#help-contact {
+  display: none;
+  /* flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 5px; */
+}
+
+/*shared style for app*/
+.app-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  background-color: #1022cc;
+  border: 1px solid white;
+  color: white;
+}
+
+.app-title-span {
+  font-family: Odibee;
+  font-size: 30px;
+}
+
+/*call app*/
+#callApp {
+  max-width: 345px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #fff;
+  border: 2px solid black;
+}
+
+#callApp-help,
+#callApp-prompt {
+  font-size: 18px;
+  padding: 10px;
+  text-align: center;
+  background-color: #ccc;
+  color: black;
+}
+
+.contact-list {
+  padding: 10px;
+  text-align: left;
+}
+
+.contact-div {
+  font-size: 16px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.contact-div:hover {
+  background: #1022cc;
+  cursor: pointer;
+  color: fff;
+}
+
+.contact-avatar {
+  clip-path: inset(2px);
+  object-fit: cover;
+  width: 64px;
+  height: 64px;
+  margin-right: 5px;
+}
+
+.no-call {
+  font-weight: normal;
+  font-style: italic;
+  color: #aaaaaa;
+}
+
+.already-called {
+  font-weight: normal;
+}
+
+/* udisk app*/
+#folderApp {
+  max-width: 345px;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #fff;
+  border: 2px solid black;
+}
+
+#folderApp-content {
+  flex: 1;
+  overflow: auto;
+  padding: 10px;
+  text-align: left;
+}
+
+#overlay-index {
+  position: absolute;
+  z-index: 310;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  border: 1px solid white;
+  background-color: #000;
+  text-align: center;
+}
+
+/*the "windows" we open for video and message/password*/
+#callVideo-window,
+#UIvid-window {
+  position: absolute;
+  z-index: 305;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid white;
+  background-color: #000;
+}
+
+#notnowPrompt-window,
+#passPrompt-window,
+#wrongPassword,
+#newContact-window,
+#calling-window,
+#message-window,
+#nocall-window,
+#solution-window,
+#credit-window {
+  position: absolute;
+  z-index: 300;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid white;
+  background-color: #000;
+  width: 200px;
+}
+
+#solution-window,
+#credit-window {
+  background-color: #777;
+}
+
+#solution-window {
+  width: 400px;
+}
+
+#credit-window {
+  width: 400px;
+}
+
+/*we override part of the lightbox style*/
+.lightbox-image {
+  max-height: 90vh;
+}
+
+#notnowPrompt-window button,
+#passPrompt-window button,
+#wrongPassword button,
+#newContact-window button,
+#UIvid-window button,
+#callVideo-window button,
+#calling-window button,
+#message-window button,
+#nocall-window button,
+#solution-window button,
+#credit-window button,
+#overlay-index button {
+  color: #fff;
+  background-color: #1022cc;
+  border: none;
+  padding: 3px;
+  margin: 3px;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#notnowPrompt-window button:hover,
+#passPrompt-window button:hover,
+#wrongPassword button:hover,
+#newContact-window button:hover,
+#UIvid-window button:hover,
+#callVideo-window button:hover,
+#calling-window button:hover,
+#message-window button:hover,
+#nocall-window button:hover,
+#solution-window button:hover,
+#credit-window button:hover,
+#overlay-index button:hover {
+  background-color: #fff;
+  color: #000;
+  cursor: pointer;
+}
+
+.message-content {
+  text-align: center;
+  color: #fff;
+  padding: 5px;
+}
+
+#passwordInput {
+  text-align: center;
+  color: black;
+  margin: 5px;
+}
+
+#footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4rem;
+  height: 34px;
+  width: 100%;
+  background-color: #1022cc;
+  text-align: center;
+}
+
+.footer-button {
+  color: #000;
+  background-color: #fff;
+  border: none;
+  margin-right: 5px;
+  padding: 3px;
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.footer-button:hover {
+  color: #000;
+  background-color: #aaa;
+  cursor: pointer;
+}
+
+#password {
+  font-size: 14px;
+}
+
+.hidden {
+  display: none;
+}
+
+/*to stylize placeholder in text input in different browser...*/
+::-webkit-input-placeholder {
+  /* Edge */
+  color: grey;
+  text-align: center;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer */
+  color: grey;
+  text-align: center;
+}
+
+::placeholder {
+  color: grey;
+  text-align: center;
+}
+
+/*class that deals with the udrive content, tread carefully, it is working ok but very capricious*/
+ul {
+  margin: 0px 0px 0px 20px;
+  list-style: none;
+  line-height: 2em;
+  font-family: Arial;
+}
+
+.arbo,
+.folder {
+  font-size: 16px;
+  position: relative;
+}
+
+.arbo:before {
+  position: absolute;
+  left: -15px;
+  top: 0px;
+  content: "";
+  display: block;
+  border-left: 1px solid #000;
+  height: 1em;
+  border-bottom: 1px solid #000;
+  width: 10px;
+}
+
+.folder-name {
+  background: url("img/iconFolder.png") left center no-repeat;
+  content: "";
+  display: inline-block;
+  padding-left: 20px;
+  height: 25px;
+  color: black;
+}
+
+.folder-name:hover {
+  text-decoration: none;
+}
+
+.protected-name {
+  background: url("img/iconPassword.png") left center no-repeat;
+  content: "";
+  display: inline-block;
+  padding-left: 20px;
+  height: 25px;
+}
+
+.protected-name:hover {
+  cursor: pointer;
+}
+
+.file-name {
+  background: url("img/iconFile.png") left center no-repeat;
+  content: "";
+  display: inline-block;
+  padding-left: 20px;
+  height: 25px;
+}
+
+.file-name:hover {
+  cursor: pointer;
+}
+
+.arbo:after {
+  position: absolute;
+  left: -15px;
+  bottom: -7px;
+  content: "";
+  display: block;
+  border-left: 1px solid #000;
+  height: 100%;
+}
+
+.rootLI {
+  font-size: 16px;
+  margin: 0px 0px 0px -20px;
+}
+
+.arbo:last-child:after {
+  display: none;
+}
+
+/*for the animation of the windows we open and close*/
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleOut {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(0);
+  }
+}
