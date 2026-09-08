@@ -38,8 +38,16 @@ video {
   src: url("img/fonts/Odibee_Sans/OdibeeSans-Regular.ttf") format("truetype");
 }
 @font-face {
+  font-family: Rustichome;
+  src: url("img/fonts/Rustichome/Rustichome.otf") format("opentype");
+}
+@font-face {
   font-family: Woodcut;
   src: url("img/fonts/Woodcut/Woodcut.ttf") format("truetype");
+}
+@font-face {
+  font-family: Woodtrap;
+  src: url("img/fonts/Woodtrap/Woodtrap.otf") format("opentype");
 }
 
 /*size of the countainer defined to fit most used screen resolution*/
@@ -55,7 +63,7 @@ video {
 
   background: url(img/background.jpg);
   background-position: center;
-  background-color: #1022cc;
+  background-color: #84D0FD;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -77,22 +85,38 @@ video {
 #container-homeMission {
   background-color: white;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #div-homeMission {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  margin-top: 1rem;
   background-color: #dcdcdc;
-  border: 2px solid #1022cc;
-  padding: 5px;
 }
 
-#os-name {
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4rem;
   margin-bottom: 4rem;
-  color: #ffffff;
-  font-size: 30px;
-  font-weight: bold;
-  padding: 5px;
-  background-color: #1022cc;
+}
+
+#home-gameTitle,
+#os-name {
+  width: 800px;
+  color: black;
+  font-size: 40px;
   font-family: Woodcut;
+  text-transform: uppercase;
+  animation: floatingTitle 7s ease-in-out infinite;
+  text-align: center;
 }
 
 #normal-contact {
@@ -114,12 +138,12 @@ video {
 
 /*shared style for app*/
 .app-title {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 50px;
-  background-color: #1022cc;
-  border: 1px solid white;
+  background-color: #3D7EB9;
   color: white;
 }
 
@@ -134,16 +158,16 @@ video {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: #fff;
+  background-color: #FBE7BE;
   border: 2px solid black;
+  border-radius: 16px;
+  overflow: hidden;
 }
 
 #callApp-help,
 #callApp-prompt {
   font-size: 18px;
-  padding: 10px;
-  text-align: center;
-  background-color: #ccc;
+  padding: 10px 10px 0 10px;
   color: black;
 }
 
@@ -156,26 +180,30 @@ video {
   font-size: 16px;
   text-align: left;
   font-weight: bold;
+  background-color: white;
 }
 
 .contact-div:hover {
-  background: #1022cc;
+  background-color: lightgray;
   cursor: pointer;
-  color: fff;
 }
 
 .contact-avatar {
-  clip-path: inset(2px);
   object-fit: cover;
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
   margin-right: 5px;
 }
 
 .no-call {
   font-weight: normal;
   font-style: italic;
-  color: #aaaaaa;
+  background-color: rgb(126, 126, 126);
+  opacity: 0.5;
+}
+
+.no-call:hover {
+  background-color: rgb(110, 110, 110);
 }
 
 .already-called {
@@ -189,8 +217,11 @@ video {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: #fff;
+
+  background-color: #FBE7BE;
   border: 2px solid black;
+  border-radius: 16px;
+  overflow: hidden;
 }
 
 #folderApp-content {
@@ -200,29 +231,63 @@ video {
   text-align: left;
 }
 
-#overlay-index {
+.window-wrapper {
   position: absolute;
-  z-index: 310;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
-  border: 1px solid white;
-  background-color: #000;
-  text-align: center;
+  transition: background-color 100ms ease-out;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.window-wrapper:has(> .hidden) {
+  background-color: transparent;
+  pointer-events: none;
+}
+
+#overlay-index {
+  width: 100%;
+  height: 100%;
+  background-color: #fbe7be;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 /*the "windows" we open for video and message/password*/
 #callVideo-window,
+#UIvid-window,
+#notnowPrompt-window,
+#passPrompt-window,
+#wrongPassword,
+#newContact-window,
+#calling-window,
+#message-window,
+#nocall-window,
+#solution-window,
+#credit-window {
+  border: 2px solid black;
+  border-radius: 16px;
+  background-color: #fbe7be;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#callVideo-window,
 #UIvid-window {
-  position: absolute;
   z-index: 305;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 1px solid white;
-  background-color: #000;
+}
+
+#callVideo-content {
+  padding: 1rem;
 }
 
 #notnowPrompt-window,
@@ -234,19 +299,8 @@ video {
 #nocall-window,
 #solution-window,
 #credit-window {
-  position: absolute;
   z-index: 300;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  border: 1px solid white;
-  background-color: #000;
   width: 200px;
-}
-
-#solution-window,
-#credit-window {
-  background-color: #777;
 }
 
 #solution-window {
@@ -274,14 +328,16 @@ video {
 #solution-window button,
 #credit-window button,
 #overlay-index button {
-  color: #fff;
-  background-color: #1022cc;
-  border: none;
-  padding: 3px;
-  margin: 3px;
+  color: #000;
+  background-color: #fff;
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 4px 16px;
   font-family: Roboto;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
+  transition: background-color 100ms ease-out;
+  margin-bottom: 1rem;
 }
 
 #notnowPrompt-window button:hover,
@@ -296,14 +352,13 @@ video {
 #solution-window button:hover,
 #credit-window button:hover,
 #overlay-index button:hover {
-  background-color: #fff;
-  color: #000;
+  background-color: #aaa;
   cursor: pointer;
 }
 
 .message-content {
   text-align: center;
-  color: #fff;
+  color: black;
   padding: 5px;
 }
 
@@ -317,26 +372,27 @@ video {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
   margin-top: 4rem;
-  height: 34px;
+  padding: 1rem 0;
   width: 100%;
-  background-color: #1022cc;
+  background-color: #3D7EB9;
   text-align: center;
 }
 
 .footer-button {
   color: #000;
   background-color: #fff;
-  border: none;
-  margin-right: 5px;
-  padding: 3px;
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 4px 16px;
   font-family: Roboto;
   font-size: 16px;
   font-weight: bold;
+  transition: background-color 100ms ease-out;
 }
 
 .footer-button:hover {
-  color: #000;
   background-color: #aaa;
   cursor: pointer;
 }
@@ -447,6 +503,20 @@ ul {
 
 .arbo:last-child:after {
   display: none;
+}
+
+@keyframes floatingTitle {
+  0% {
+    transform: translateY(2px) scale(1) rotateZ(-1deg);
+  }
+
+  50% {
+    transform: translateY(-1px) scale(1.05) rotateZ(1.5deg);
+  }
+
+  100% {
+    transform: translateY(2px) scale(1) rotateZ(-1deg);
+  }
 }
 
 /*for the animation of the windows we open and close*/

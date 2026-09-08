@@ -311,7 +311,10 @@ function createContact(contact, parent){
 	var x = document.createElement("div") ;
 	x.id = "divcontact-"+contact.vid ;
 	x.classList.add("contact-div") ;
-	x.classList.add("no-call") ;
+
+	if (contact !== missingContact) {
+		x.classList.add("no-call") ;
+	}
 
 	/*NK ICI SI TXT OU PAS*/
 	if(contact.canal == "video"){

@@ -55,7 +55,7 @@ var udiskData = {
         foldername: "Chien",
         password: "a",
         sequence: 1,
-        files: ["Code morse.png"],
+        files: ["Code_morse.png"],
       },
       {
         foldername: "Exterieur",
@@ -68,7 +68,7 @@ var udiskData = {
   },
 };
 
-var gameTitle = "Escaposaurus Game Title";
+var gameTitle = "The promised moutonland";
 var gameDescriptionHome =
   "Ceci est une courte aventure d'exemple pour montrer ce que le framework Escaposaurus permet facilement de réaliser.<br/>Le code source est téléchargeable sur <a href='https://github.com/RedNaK/escaposaurus' target='_blank'>GitHub</a>";
 var gameMissionCall =
@@ -80,23 +80,22 @@ var gameCredit = "Un jeu conçu et réalisé par : <br/>Stéphanie Mader";
 var gameThanks = "Remerciements : <br/> ;)";
 
 var OSName = "The promised moutonland";
-var explorerName = "Lieux";
-var callerAppName = "Connaissances";
+var explorerName = "LIEUX";
+var callerAppName = "CONTACTS";
 
 // titles of video windows
 var titleData = {};
 titleData.introTitle = "INTRODUCTION";
 titleData.epilogueTitle = "EPILOGUE";
-titleData.callTitle = "APPEL EN COURS...";
+titleData.callTitle = "Discussion";
 
 // change of caller app prompt for each sequence
 var promptDefault = "Rien à demander, ne pas les déranger.";
 var prompt = [];
 prompt[0] = "Prendre contact";
-prompt[1] = "";
-prompt[2] = "";
-prompt[3] = "Envoyer la carte";
-prompt[4] = "Appeler Nathalie pour savoir où en sont les secours.";
+prompt[1] = "Info 1";
+prompt[2] = "Info 2";
+prompt[3] = "Info 3";
 
 // when the sequence number reach this, the player win, the missing contact is added and the player can call them
 var sequenceWin = 3;
@@ -106,9 +105,9 @@ var sequenceWin = 3;
 // if you put "none" or anything that is not an existing filename, the player will NOT be able to call the contacts during this sequence
 var seqMainHint = [];
 seqMainHint[0] = "Mouton.png";
-seqMainHint[1] = "aucun"; // if you put anything that is not an existing filename of the udisk, the player will never be able to call any contacts or get helps during this sequence
-seqMainHint[2] = "aucun";
-seqMainHint[3] = "swisstopo-screen.png";
+seqMainHint[1] = "Sifflet.png"; // if you put anything that is not an existing filename of the udisk, the player will never be able to call any contacts or get helps during this sequence
+seqMainHint[2] = "Code_morse.png";
+seqMainHint[3] = "noHint";
 
 // contact list, vid is the name of their folder in the videoContact folder,
 // then the game autoload the video named seq%number of the current sequence%, e.g. seq0.MP4 for the first sequence (numbered 0 because computer science habits)
@@ -211,4 +210,4 @@ var solutionText = {};
 solutionText.winState = "Si Sabine a été secourue, le jeu est fini bravo.";
 solutionText.lackMainHint = "Vous devez ouvrir le fichier <b>%s</b><br/>";
 solutionText.password =
-  "Vous devez déverouiller le dossier <b>%s1</b><br/>avec le mot de passe : <b>%s2</b><br/>";
+  "Vous devez déverouiller le lieu <b>%s1</b><br/>avec le mot de passe : <b>%s2</b><br/>";
