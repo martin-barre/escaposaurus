@@ -271,10 +271,14 @@
 					<h3 id="home-gameTitle"></h3>
 					<span id="home-gameDescription"></span><br/><br/><br/><br/>
 					<div id="div-homeMission">
-						<h3 id="home-mission"></h3>
-						<video id="vid-overlay" controls="true" autoplay="true" src="" style="text-align:center;max-width:750px;"></video>
+						<div class="col-sm-6">
+							<h3 id="home-mission"></h3>
+							<button id="overlay-btn" class="window-btn" onclick="closeOverlay('overlay-index')"></btn>
+						</div>
+						<div class="col-sm-6">
+							<video id="vid-overlay" controls="true" autoplay="true" src="" style="text-align:center;max-width:750px;"></video>
+						</div>
 						<br/><br/>
-						<button id="overlay-btn" class="window-btn" onclick="closeOverlay('overlay-index')"></btn>
 					</div>
 				</div>
 			</div>

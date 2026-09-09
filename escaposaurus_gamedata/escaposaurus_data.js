@@ -37,29 +37,37 @@ var udiskData = {
     folders: [
       {
         foldername: "Grange",
-        files: ["Paille.png", "Mouton.png", "moutons.png"],
+        files: [
+          "cloture.png",
+          "mouton.png",
+          "moutons.png",
+          "paille.png",
+        ],
       },
       {
         foldername: "Hangar",
-        password: "a",
+        password: "134410426769",
         sequence: 0,
         files: [
-          "Pelle.png",
-          "Mouton2.png",
-          "Mouton.png",
-          "Sifflet.png",
-          "Memo_fermier.png",
+          "cuterie_charles.png",
+          "facture.png",
+          "memo_fermier.png",
+          "sifflet.mp4",
         ],
       },
       {
         foldername: "Chien",
-        password: "a",
+        password: "01001",
         sequence: 1,
-        files: ["Code_morse.png"],
+        files: [
+          "code_morse.png",
+          "lettre_cuterie_charles.png",
+          "recette_bouzelouf.png"
+        ],
       },
       {
         foldername: "Exterieur",
-        password: "a",
+        password: "ragout",
         sequence: 2,
         files: [],
       },
@@ -104,9 +112,9 @@ var sequenceWin = 3;
 // if you put in the string "noHint", player will be able to immediatly call the contact at the beginning of the sequence
 // if you put "none" or anything that is not an existing filename, the player will NOT be able to call the contacts during this sequence
 var seqMainHint = [];
-seqMainHint[0] = "Mouton.png";
-seqMainHint[1] = "Sifflet.png"; // if you put anything that is not an existing filename of the udisk, the player will never be able to call any contacts or get helps during this sequence
-seqMainHint[2] = "Code_morse.png";
+seqMainHint[0] = "moutons.png";
+seqMainHint[1] = "sifflet.mp4"; // if you put anything that is not an existing filename of the udisk, the player will never be able to call any contacts or get helps during this sequence
+seqMainHint[2] = "code_morse.png";
 seqMainHint[3] = "noHint";
 
 // contact list, vid is the name of their folder in the videoContact folder,
@@ -123,42 +131,42 @@ normalContacts[0] = {
 normalContacts[1] = {
   vid: "Mouton 1",
   vod_folder: "",
-  username: "Mouton 1",
+  username: "Mouton camé",
   canal: "video",
   avatar: "mouton_came.png",
 };
 normalContacts[2] = {
   vid: "Mouton 2",
   vod_folder: "",
-  username: "Mouton 2",
+  username: "Mouton intello",
   canal: "video",
   avatar: "mouton_intello.png",
 };
 normalContacts[3] = {
   vid: "Mouton 3",
   vod_folder: "",
-  username: "Mouton 3",
+  username: "Mouton noir",
   canal: "video",
   avatar: "mouton_noir.png",
 };
 normalContacts[4] = {
   vid: "Mouton 4",
   vod_folder: "",
-  username: "Mouton 4",
+  username: "Dinnerbone",
   canal: "video",
   avatar: "mouton_dinnerbone.png",
 };
 normalContacts[5] = {
   vid: "Mouton 5",
   vod_folder: "",
-  username: "Mouton 5",
+  username: "Mouton rasé",
   canal: "video",
   avatar: "mouton_rase.png",
 };
 normalContacts[6] = {
   vid: "Mouton 6",
   vod_folder: "",
-  username: "Mouton 6",
+  username: "Mouton paniqué",
   canal: "video",
   avatar: "mouton_panique.png",
 };

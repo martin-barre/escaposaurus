@@ -26,7 +26,9 @@ body {
 }
 
 video {
-  max-width: 960px;
+  object-fit: contain;
+  max-width: 800px;
+  max-height: calc(100vh - 24rem);
 }
 
 @font-face {
@@ -91,10 +93,6 @@ video {
 }
 
 #div-homeMission {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
   padding: 2rem;
   margin-top: 1rem;
   background-color: #dcdcdc;
@@ -104,19 +102,24 @@ video {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 4rem;
-  margin-bottom: 4rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 #home-gameTitle,
 #os-name {
   width: 800px;
-  color: black;
-  font-size: 40px;
+  color: white;
+  font-size: 34px;
   font-family: Woodcut;
   text-transform: uppercase;
   animation: floatingTitle 7s ease-in-out infinite;
   text-align: center;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+#home-gameTitle {
+  color: black;
 }
 
 #normal-contact {
@@ -373,7 +376,7 @@ video {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  margin-top: 4rem;
+  margin-top: 3rem;
   padding: 1rem 0;
   width: 100%;
   background-color: #3D7EB9;
