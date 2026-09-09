@@ -27,8 +27,8 @@ body {
 
 video {
   object-fit: contain;
-  max-width: 800px;
-  max-height: calc(100vh - 24rem);
+  max-width: min(65vw, 680px);
+  max-height: min(60vh, 520px);
 }
 
 @font-face {
@@ -291,6 +291,78 @@ video {
 
 #callVideo-content {
   padding: 1rem;
+  max-width: 100%;
+  max-height: calc(80vh - 100px);
+  overflow: auto;
+}
+
+.dynamic-video-window {
+  border: 2px solid black;
+  border-radius: 16px;
+  background-color: #fbe7be;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  resize: none;
+  min-width: 320px;
+  min-height: 220px;
+}
+
+.dynamic-window-header {
+  cursor: move;
+  user-select: none;
+}
+
+.dynamic-video-content {
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dynamic-video-media {
+  display: block;
+  margin: 0 auto;
+}
+
+.udisk-media-window {
+  width: min(70vw, 900px);
+  height: min(75vh, 700px);
+  overflow: hidden;
+}
+
+.udisk-media {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.udisk-media-window .dynamic-video-content {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.window-close-cross {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  line-height: 24px;
+  padding: 0;
+  margin: 0;
+  border-radius: 50%;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  z-index: 2;
 }
 
 #notnowPrompt-window,
@@ -316,7 +388,8 @@ video {
 
 /*we override part of the lightbox style*/
 .lightbox-image {
-  max-height: 90vh;
+  max-width: min(70vw, 900px);
+  max-height: min(70vh, 650px);
 }
 
 #notnowPrompt-window button,

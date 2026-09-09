@@ -18,6 +18,10 @@ var sequenceNumber = 0 ;
 var winState = false ;
 var mainHintFound = false ;
 var gameStart = false ;
+var videoWindowCounter = 0;
+var topVideoWindowZIndex = 1000;
+var dragState = null;
+var openedUdiskWindows = {};
 
 
 /*
@@ -104,9 +108,6 @@ function loadGame(folders, files, overlay){
     createContactList() ;
     lockContacts() ;
 
-    /*launch lightbox after creation of the udisk to make it work*/
-    startLighBox() ;
-
     /*to know when hint are opened*/
     addListenerToLink() ;
 
@@ -127,10 +128,18 @@ function addListenerToLink(){
 	var z = document.getElementsByClassName('file-name') ;
 	for(var i = 0 ; i < z.length ; i++){
 		var fn = z[i].href.substring(z[i].href.lastIndexOf('/')+1);
+		z[i].addEventListener("click", onUdiskFileClick) ;
 		if(seqMainHint.includes(fn)){
 			z[i].addEventListener("click", callbackClicHint) ;
 		}
 	}
+}
+
+function onUdiskFileClick(evt){
+	evt.preventDefault();
+	var href = evt.currentTarget.href;
+	var fn = href.substring(href.lastIndexOf('/')+1);
+	openUdiskFileWindow(href, fn);
 }
 
 var callbackClicHint = function(evt){
@@ -263,13 +272,95 @@ function cFile(name, parent, fullPath){
 	var elemA = document.createElement('a') ;
 	elemA.classList.add("file-name") ;
 	elemA.href = udiskRoot+fullPath+name ;
-	elemA.setAttribute("data-lightbox", "") ;
-	elemA.setAttribute("data-image-alt", "name") ;
 	elemA.innerHTML = name ;
 	elem.appendChild(elemA) ;
 
 	var p = document.getElementById(parent+"ul") ;
 	p.appendChild(elem) ;
+}
+
+function openUdiskFileWindow(src, title){
+	if(openedUdiskWindows[src] && openedUdiskWindows[src].parentElement){
+		bringVideoWindowToFront(openedUdiskWindows[src]);
+		return;
+	}
+	if(src.match(/\.(jpeg|jpg|gif|png)$/i)){
+		openUdiskImageWindow(src, title);
+		return;
+	}
+	if(src.match(/\.(mov|mp4|mpeg|avi)$/i)){
+		openUdiskMediaWindow(src, title, "video");
+		return;
+	}
+	window.open(src, "_blank");
+}
+
+function openUdiskImageWindow(src, title){
+	openUdiskMediaWindow(src, title, "image");
+}
+
+function openUdiskMediaWindow(src, title, mediaType){
+	videoWindowCounter++;
+	var windowId = "udisk-media-window-" + videoWindowCounter;
+
+	var wrapper = document.createElement("div");
+	wrapper.classList.add("window-wrapper");
+	wrapper.style.pointerEvents = "none";
+	wrapper.style.backgroundColor = "transparent";
+
+	var win = document.createElement("div");
+	win.id = windowId;
+	win.setAttribute("data-udisk-src", src);
+	win.classList.add("dynamic-video-window");
+	win.classList.add("udisk-media-window");
+	win.style.pointerEvents = "auto";
+
+	var titleDiv = document.createElement("div");
+	titleDiv.classList.add("app-title");
+	titleDiv.classList.add("dynamic-window-header");
+	var titleSpan = document.createElement("span");
+	titleSpan.classList.add("app-title-span");
+	titleSpan.innerHTML = title;
+	titleDiv.appendChild(titleSpan);
+
+	var contentDiv = document.createElement("div");
+	contentDiv.classList.add("dynamic-video-content");
+
+	if(mediaType == "image"){
+		var img = document.createElement("img");
+		img.src = src;
+		img.alt = title;
+		img.classList.add("udisk-media");
+		contentDiv.appendChild(img);
+	}else{
+		var v = document.createElement("video");
+		v.setAttribute("controls", true);
+		v.setAttribute("autoplay", true);
+		v.src = src;
+		v.type = "video/mp4";
+		v.classList.add("udisk-media");
+		contentDiv.appendChild(v);
+	}
+
+	var closeBtn = createWindowCloseButton(function(){
+		closeVideoWindow(win);
+	});
+
+	win.appendChild(titleDiv);
+	win.appendChild(contentDiv);
+	win.appendChild(closeBtn);
+	wrapper.appendChild(win);
+	document.body.appendChild(wrapper);
+
+	positionDynamicVideoWindow(win, videoWindowCounter);
+	win.addEventListener("mousedown", function(){
+		bringVideoWindowToFront(win);
+	});
+	titleDiv.addEventListener("mousedown", function(evt){
+		startWindowDrag(evt, win);
+	});
+	bringVideoWindowToFront(win);
+	openedUdiskWindows[src] = win;
 }
 
 /*to lock folder after creating the udisk*/
@@ -422,6 +513,7 @@ function openPasswordPrompt(foldername){
 
 		var p = document.getElementById("passPrompt-window") ;
 		p.classList.remove("hidden") ;
+		bringSystemWindowToFront(p);
 		document.getElementById("passwordInput").focus() ;
 
 	}else{
@@ -431,6 +523,7 @@ function openPasswordPrompt(foldername){
 
 			var p = document.getElementById("notnowPrompt-window") ;
 			p.classList.remove("hidden") ;
+			bringSystemWindowToFront(p);
 		}/*else nothing as the folder has already been unlocked*/
 	}
 }
@@ -466,9 +559,6 @@ function openContactTxTWindow(vid, bigAvatarHelper){
 
 /*open/close video windows*/
 function openVideoWindow(vid, vid_folder){
-	var x = document.getElementById("callVideo-content") ;
-	var t = document.getElementById("callVideo-title") ;
-	
 	var title ;
 	var src ;
 	/*according to case, deal with title and video path*/
@@ -481,10 +571,6 @@ function openVideoWindow(vid, vid_folder){
 	}else if(vid == "missing"){
 		title = titleData.callTitle ;
 		src = missingVideoPath ;
-
-		/*add listerner to launch the end of the game when player close this video*/
-		var cl = document.getElementById("btn-closecall") ;
-		cl.addEventListener("click", callbackCloseMissingCall) ;
 	}else{
 		if(mainHintFound){
 			title = titleData.callTitle ;
@@ -498,27 +584,150 @@ function openVideoWindow(vid, vid_folder){
 	}
 
 	TinyStato.logThis(12, "playvideo", vid, sequenceNumber) ;
-	/*create the video element everything*/
-	var v = document.createElement("video") ;
-	v.setAttribute("controls", true) ;
-	v.setAttribute("autoplay", true) ;
-
-	t.innerHTML = title ;
-	v.src = src ;
-
-	v.type = "video/mp4" ;
-	x.appendChild(v) ;
-
-	openIt("callVideo-window") ;
+	openDynamicVideoWindow(title, src, vid);
 }
 
 function closeVideoWindow(parentElem){
-	closeIt(parentElem.id) ;
-	/*destroy video, that stop it also*/
-	var x = document.getElementById("callVideo-content") ;
-	while (x.firstChild) {
-		x.removeChild(x.lastChild);
+	var src = parentElem.getAttribute("data-udisk-src");
+	if(src && openedUdiskWindows[src] === parentElem){
+		delete openedUdiskWindows[src];
 	}
+	var wrapper = parentElem.parentElement;
+	if(wrapper && wrapper.parentElement){
+		wrapper.parentElement.removeChild(wrapper);
+		return;
+	}
+	if(parentElem.parentElement){
+		parentElem.parentElement.removeChild(parentElem);
+	}
+}
+
+function bringVideoWindowToFront(windowElem){
+	topVideoWindowZIndex++;
+	windowElem.style.zIndex = topVideoWindowZIndex;
+}
+
+function bringSystemWindowToFront(windowElem){
+	topVideoWindowZIndex++;
+	var topValue = topVideoWindowZIndex + 1000;
+	windowElem.style.zIndex = topValue;
+	var parent = windowElem.parentElement;
+	if(parent && parent.classList.contains("window-wrapper")){
+		parent.style.zIndex = topValue;
+	}
+}
+
+function openDynamicVideoWindow(title, src, vid){
+	videoWindowCounter++;
+	var windowId = "callVideo-window-" + videoWindowCounter;
+
+	var wrapper = document.createElement("div");
+	wrapper.classList.add("window-wrapper");
+	wrapper.style.pointerEvents = "none";
+	wrapper.style.backgroundColor = "transparent";
+
+	var win = document.createElement("div");
+	win.id = windowId;
+	win.classList.add("hidden");
+	win.classList.add("dynamic-video-window");
+	win.style.pointerEvents = "auto";
+
+	var titleDiv = document.createElement("div");
+	titleDiv.classList.add("app-title");
+	titleDiv.classList.add("dynamic-window-header");
+	var titleSpan = document.createElement("span");
+	titleSpan.classList.add("app-title-span");
+	titleSpan.innerHTML = title;
+	titleDiv.appendChild(titleSpan);
+
+	var contentDiv = document.createElement("div");
+	contentDiv.id = windowId + "-content";
+	contentDiv.classList.add("dynamic-video-content");
+
+	var v = document.createElement("video");
+	v.setAttribute("controls", true);
+	v.setAttribute("autoplay", true);
+	v.src = src;
+	v.type = "video/mp4";
+	v.classList.add("dynamic-video-media");
+	contentDiv.appendChild(v);
+
+	var closeBtn = createWindowCloseButton(function(){
+		closeVideoWindow(win);
+	});
+
+	if(vid == "missing"){
+		closeBtn.addEventListener("click", callbackCloseMissingCall);
+	}
+
+	win.appendChild(titleDiv);
+	win.appendChild(contentDiv);
+	win.appendChild(closeBtn);
+	wrapper.appendChild(win);
+	document.body.appendChild(wrapper);
+	positionDynamicVideoWindow(win, videoWindowCounter);
+
+	win.addEventListener("mousedown", function(){
+		bringVideoWindowToFront(win);
+	});
+	titleDiv.addEventListener("mousedown", function(evt){
+		startWindowDrag(evt, win);
+	});
+	bringVideoWindowToFront(win);
+	openIt(windowId);
+}
+
+function positionDynamicVideoWindow(windowElem, idx){
+	var left = 40 + ((idx - 1) % 4) * 40;
+	var top = 80 + ((idx - 1) % 4) * 30;
+	windowElem.style.position = "absolute";
+	windowElem.style.left = left + "px";
+	windowElem.style.top = top + "px";
+	windowElem.style.maxWidth = "min(70vw, 720px)";
+	windowElem.style.maxHeight = "80vh";
+}
+
+function createWindowCloseButton(onClose){
+	var closeBtn = document.createElement("button");
+	closeBtn.classList.add("window-close-cross");
+	closeBtn.setAttribute("type", "button");
+	closeBtn.setAttribute("aria-label", "Fermer");
+	closeBtn.innerHTML = "&times;";
+	closeBtn.onclick = onClose;
+	return closeBtn;
+}
+
+function startWindowDrag(evt, windowElem){
+	evt.preventDefault();
+	bringVideoWindowToFront(windowElem);
+	dragState = {
+		windowElem: windowElem,
+		startX: evt.clientX,
+		startY: evt.clientY,
+		startLeft: windowElem.offsetLeft,
+		startTop: windowElem.offsetTop
+	};
+	document.addEventListener("mousemove", onWindowDrag);
+	document.addEventListener("mouseup", stopWindowDrag);
+}
+
+function onWindowDrag(evt){
+	if(dragState === null){
+		return;
+	}
+	var dx = evt.clientX - dragState.startX;
+	var dy = evt.clientY - dragState.startY;
+	dragState.windowElem.style.left = (dragState.startLeft + dx) + "px";
+	dragState.windowElem.style.top = (dragState.startTop + dy) + "px";
+}
+
+function stopWindowDrag(){
+	if(dragState === null){
+		return;
+	}
+	dragState = null;
+	document.removeEventListener("mousemove", onWindowDrag);
+	document.removeEventListener("mouseup", stopWindowDrag);
 }
 
 /*
@@ -526,6 +735,9 @@ short func to display/hide stuff
 */
 function openIt(nameId){
 	var mainElt = document.getElementById(nameId);
+	if(mainElt && mainElt.classList && !mainElt.classList.contains("dynamic-video-window") && !mainElt.classList.contains("udisk-media-window")){
+		bringSystemWindowToFront(mainElt);
+	}
 	mainElt.style.animation = [animation.scaleIn, animation.fadeIn];
 	mainElt.classList.remove('hidden');
 	TinyStato.logThis(10, "openit", nameId, sequenceNumber) ;
@@ -598,8 +810,6 @@ function closeAppelEntrant(d){
 
 /*via eventlistener, callback that open the end of the game (epilogue and credit video)*/
 var callbackCloseMissingCall = function(){
-	var cl = document.getElementById("btn-closecall") ;
-	cl.removeEventListener("click", callbackCloseMissingCall) ;
 	setTimeout(function () {
 		openIt('calling-window') ;
 	},1000);

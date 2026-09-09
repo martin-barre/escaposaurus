@@ -17,6 +17,7 @@ function startLighBox(){
     let container;
     let content;
     let wrapper;
+    let dragData = null;
 
     const doc = document;
     const body = doc.body;
@@ -152,6 +153,45 @@ function startLighBox(){
       return itens;
     };
 
+    const startDrag = (event) => {
+      if (!wrapper || !container) {
+        return;
+      }
+      if (event.target === btnClose || (btnNav && (event.target === btnNav.next || event.target === btnNav.previous))) {
+        return;
+      }
+      dragData = {
+        startX: event.clientX,
+        startY: event.clientY,
+        left: wrapper.offsetLeft,
+        top: wrapper.offsetTop
+      };
+      wrapper.style.position = 'fixed';
+      wrapper.style.margin = '0';
+      wrapper.style.left = dragData.left + 'px';
+      wrapper.style.top = dragData.top + 'px';
+      wrapper.style.transform = 'none';
+      doc.addEventListener('mousemove', onDrag);
+      doc.addEventListener('mouseup', stopDrag);
+    };
+
+    const onDrag = (event) => {
+      if (!dragData) {
+        return;
+      }
+      wrapper.style.left = (dragData.left + event.clientX - dragData.startX) + 'px';
+      wrapper.style.top = (dragData.top + event.clientY - dragData.startY) + 'px';
+    };
+
+    const stopDrag = () => {
+      if (!dragData) {
+        return;
+      }
+      dragData = null;
+      doc.removeEventListener('mousemove', onDrag);
+      doc.removeEventListener('mouseup', stopDrag);
+    };
+
     const build = () => {
       btnClose = doc.createElement('button');
       btnClose.setAttribute('aria-label', 'Close');
@@ -166,6 +206,7 @@ function startLighBox(){
       wrapper.style.animation = [animation.scaleIn, animation.fadeIn];
       wrapper.appendChild(btnClose);
       wrapper.appendChild(content);
+      wrapper.addEventListener('mousedown', startDrag);
 
       container = content.cloneNode(false);
       container.className = 'lightbox-container';
@@ -220,6 +261,7 @@ function startLighBox(){
 
     const close = () => {
       toggleEvents('remove');
+      stopDrag();
       container.style.animation = animation.fadeOut;
       wrapper.style.animation = [animation.scaleOut, animation.fadeOut];
       setTimeout(() => {
