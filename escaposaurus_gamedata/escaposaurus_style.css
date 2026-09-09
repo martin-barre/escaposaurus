@@ -14,7 +14,14 @@
   padding: 0px;
 }
 a {
-  color: #1022cc;
+  color: #3DB956;
+  text-decoration: none;
+  cursor: pointer;
+}
+a:hover {
+  color: #349547;
+  text-decoration: none;
+  cursor: pointer;
 }
 body {
   font-family: Arial;
@@ -131,12 +138,10 @@ video {
 }
 
 #help-contact {
-  display: none;
-  /* flex: 1;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 5px; */
+  gap: 5px;
 }
 
 /*shared style for app*/
@@ -146,7 +151,7 @@ video {
   align-items: center;
   justify-content: center;
   height: 50px;
-  background-color: #3D7EB9;
+  background-color: #3DB956;
   color: white;
 }
 
@@ -170,12 +175,17 @@ video {
 #callApp-help,
 #callApp-prompt {
   font-size: 18px;
-  padding: 10px 10px 0 10px;
   color: black;
+  padding: 0 10px;
+}
+
+#callApp-help {
+  margin-top: 10px;
 }
 
 .contact-list {
-  padding: 10px;
+  padding: 0 10px;
+  margin: 10px 0;
   text-align: left;
 }
 
@@ -452,7 +462,7 @@ video {
   margin-top: 3rem;
   padding: 1rem 0;
   width: 100%;
-  background-color: #3D7EB9;
+  background-color: #3DB956;
   text-align: center;
 }
 
@@ -531,11 +541,6 @@ ul {
   display: inline-block;
   padding-left: 20px;
   height: 25px;
-  color: black;
-}
-
-.folder-name:hover {
-  text-decoration: none;
 }
 
 .protected-name {
@@ -570,6 +575,10 @@ ul {
   display: block;
   border-left: 1px solid #000;
   height: 100%;
+}
+
+#rootul {
+  color: #3DB956;
 }
 
 .rootLI {
