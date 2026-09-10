@@ -118,8 +118,8 @@ function loadGame(folders, files, overlay){
     /*ok y'a un truc de sécurité qui fait que ça n'auto-play pas si y'a pas eu un click avant*/
     /*faudra juste faire un message, call entrant, puis ok qui ouvre cette vidéo*/
     setTimeout(function () {
-		openVideoWindow('intro');
-	}, 500);
+		openIt('calling-window') ;
+	},500);
 }
 
 
@@ -311,7 +311,6 @@ function openUdiskMediaWindow(src, title, mediaType){
 	var win = document.createElement("div");
 	win.id = windowId;
 	win.setAttribute("data-udisk-src", src);
-	win.classList.add("popup-window");
 	win.classList.add("dynamic-video-window");
 	win.classList.add("udisk-media-window");
 	win.style.pointerEvents = "auto";
@@ -346,14 +345,14 @@ function openUdiskMediaWindow(src, title, mediaType){
 	var closeBtn = createWindowCloseButton(function(){
 		closeVideoWindow(win);
 	});
-	titleDiv.appendChild(closeBtn);
 
 	win.appendChild(titleDiv);
 	win.appendChild(contentDiv);
+	win.appendChild(closeBtn);
 	wrapper.appendChild(win);
 	document.body.appendChild(wrapper);
 
-	indexWindowObserver.observe(win);
+	positionDynamicVideoWindow(win, videoWindowCounter);
 	win.addEventListener("mousedown", function(){
 		bringVideoWindowToFront(win);
 	});
@@ -560,11 +559,6 @@ function openContactTxTWindow(vid, bigAvatarHelper){
 
 /*open/close video windows*/
 function openVideoWindow(vid, vid_folder){
-	var win = document.getElementById("callVideo-window");
-	if(!win.classList.contains("hidden")){
-		return;
-	}
-
 	var title ;
 	var src ;
 	/*according to case, deal with title and video path*/
@@ -590,36 +584,10 @@ function openVideoWindow(vid, vid_folder){
 	}
 
 	TinyStato.logThis(12, "playvideo", vid, sequenceNumber) ;
-	document.getElementById("callVideo-title").textContent = title;
-	var video = document.createElement("video");
-	video.controls = true;
-	video.autoplay = true;
-	video.src = src;
-	document.getElementById("callVideo-content").replaceChildren(video);
-	win.setAttribute("data-call-id", vid);
-	openIt(win.id);
+	openDynamicVideoWindow(title, src, vid);
 }
 
 function closeVideoWindow(parentElem){
-	if(parentElem.id == "callVideo-window"){
-		if(parentElem.classList.contains("hidden")){
-			return;
-		}
-		var isFinalCall = parentElem.getAttribute("data-call-id") == "missing";
-		var content = document.getElementById("callVideo-content");
-		var video = content.querySelector("video");
-		if(video){
-			video.pause();
-		}
-		content.replaceChildren();
-		parentElem.removeAttribute("data-call-id");
-		closeIt(parentElem.id);
-		if(isFinalCall){
-			callbackCloseMissingCall();
-		}
-		return;
-	}
-	indexWindowObserver.unobserve(parentElem);
 	var src = parentElem.getAttribute("data-udisk-src");
 	if(src && openedUdiskWindows[src] === parentElem){
 		delete openedUdiskWindows[src];
@@ -649,38 +617,87 @@ function bringSystemWindowToFront(windowElem){
 	}
 }
 
-function keepWindowInViewport(win){
-	// Untouched windows stay centered by the wrapper's flex layout.
-	if(win.style.position != "absolute"){
-		return;
+function openDynamicVideoWindow(title, src, vid){
+	videoWindowCounter++;
+	var windowId = "callVideo-window-" + videoWindowCounter;
+
+	var wrapper = document.createElement("div");
+	wrapper.classList.add("window-wrapper");
+	wrapper.style.pointerEvents = "none";
+	wrapper.style.backgroundColor = "transparent";
+
+	var win = document.createElement("div");
+	win.id = windowId;
+	win.classList.add("hidden");
+	win.classList.add("dynamic-video-window");
+	win.style.pointerEvents = "auto";
+
+	var titleDiv = document.createElement("div");
+	titleDiv.classList.add("app-title");
+	titleDiv.classList.add("dynamic-window-header");
+	var titleSpan = document.createElement("span");
+	titleSpan.classList.add("app-title-span");
+	titleSpan.innerHTML = title;
+	titleDiv.appendChild(titleSpan);
+
+	var contentDiv = document.createElement("div");
+	contentDiv.id = windowId + "-content";
+	contentDiv.classList.add("dynamic-video-content");
+
+	var v = document.createElement("video");
+	v.setAttribute("controls", true);
+	v.setAttribute("autoplay", true);
+	v.src = src;
+	v.type = "video/mp4";
+	v.classList.add("dynamic-video-media");
+	contentDiv.appendChild(v);
+
+	var closeBtn = createWindowCloseButton(function(){
+		closeVideoWindow(win);
+	});
+
+	if(vid == "missing"){
+		closeBtn.addEventListener("click", callbackCloseMissingCall);
 	}
-	win.style.left = Math.max(16, Math.min(win.offsetLeft, document.documentElement.clientWidth - win.offsetWidth - 16)) + "px";
-	win.style.top = Math.max(16, Math.min(win.offsetTop, document.documentElement.clientHeight - win.offsetHeight - 16)) + "px";
+
+	win.appendChild(titleDiv);
+	win.appendChild(contentDiv);
+	win.appendChild(closeBtn);
+	wrapper.appendChild(win);
+	document.body.appendChild(wrapper);
+	positionDynamicVideoWindow(win, videoWindowCounter);
+
+	win.addEventListener("mousedown", function(){
+		bringVideoWindowToFront(win);
+	});
+	titleDiv.addEventListener("mousedown", function(evt){
+		startWindowDrag(evt, win);
+	});
+	bringVideoWindowToFront(win);
+	openIt(windowId);
 }
 
-// Size is handled by CSS; only reposition indices when their bounds change.
-var indexWindowObserver = new ResizeObserver(function(entries){
-	entries.forEach(function(entry){ keepWindowInViewport(entry.target); });
-});
-
-window.addEventListener("resize", function(){
-	document.querySelectorAll(".udisk-media-window").forEach(keepWindowInViewport);
-});
+function positionDynamicVideoWindow(windowElem, idx){
+	var left = 40 + ((idx - 1) % 4) * 40;
+	var top = 80 + ((idx - 1) % 4) * 30;
+	windowElem.style.position = "absolute";
+	windowElem.style.left = left + "px";
+	windowElem.style.top = top + "px";
+	windowElem.style.maxWidth = "min(70vw, 720px)";
+	windowElem.style.maxHeight = "80vh";
+}
 
 function createWindowCloseButton(onClose){
 	var closeBtn = document.createElement("button");
 	closeBtn.classList.add("window-close-cross");
 	closeBtn.setAttribute("type", "button");
 	closeBtn.setAttribute("aria-label", "Fermer");
-	closeBtn.textContent = "\u00d7";
+	closeBtn.innerHTML = "&times;";
 	closeBtn.onclick = onClose;
 	return closeBtn;
 }
 
 function startWindowDrag(evt, windowElem){
-	if(evt.target.closest("button")){
-		return;
-	}
 	evt.preventDefault();
 	bringVideoWindowToFront(windowElem);
 	dragState = {
@@ -690,9 +707,6 @@ function startWindowDrag(evt, windowElem){
 		startLeft: windowElem.offsetLeft,
 		startTop: windowElem.offsetTop
 	};
-	windowElem.style.position = "absolute";
-	windowElem.style.left = dragState.startLeft + "px";
-	windowElem.style.top = dragState.startTop + "px";
 	document.addEventListener("mousemove", onWindowDrag);
 	document.addEventListener("mouseup", stopWindowDrag);
 }
@@ -705,7 +719,6 @@ function onWindowDrag(evt){
 	var dy = evt.clientY - dragState.startY;
 	dragState.windowElem.style.left = (dragState.startLeft + dx) + "px";
 	dragState.windowElem.style.top = (dragState.startTop + dy) + "px";
-	keepWindowInViewport(dragState.windowElem);
 }
 
 function stopWindowDrag(){
@@ -789,7 +802,7 @@ function closeAppelEntrant(d){
 	closeIt(d) ;
 
 	if(winState === false){
-		openVideoWindow('intro');
+		openVideoWindow('intro') ;
 	}else{
 		openEpilogue() ;
 	}
@@ -797,7 +810,9 @@ function closeAppelEntrant(d){
 
 /*via eventlistener, callback that open the end of the game (epilogue and credit video)*/
 var callbackCloseMissingCall = function(){
-	openEpilogue() ;
+	setTimeout(function () {
+		openIt('calling-window') ;
+	},1000);
 }
 
 function openEpilogue(){

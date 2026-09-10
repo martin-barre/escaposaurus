@@ -114,7 +114,8 @@
 			</div>
 		</div>
 
-		<div id="footer"><button class="footer-button" onclick="openIt('overlay-index')">Revoir page introduction</button>
+		<div id="footer">
+			<button class="footer-button" onclick="openIt('overlay-index')">Revoir page introduction</button>
 			<button class="footer-button" onclick="openVideoWindow('introBis')">Revoir premier appel reçu</button>
 			<button id="button-outro" class="footer-button hidden" onclick="openVideoWindow('epilogue')">Revoir vidéo générique</button>
 			<button class="footer-button" onclick="openIt('solution-window')">Aide &amp; solutions</button>
@@ -276,17 +277,12 @@
 			<div class="container" id="container-homeMission">
 				<br/>
 					<h3 id="home-gameTitle"></h3>
-					<span id="home-gameDescription"></span><br/><br/><br/><br/>
+					<span id="home-gameDescription"></span>
 					<div id="div-homeMission">
-						<div class="col-sm-6">
-							<h3 id="home-mission"></h3>
-							<button id="overlay-btn" class="window-btn" onclick="closeOverlay('overlay-index')"></btn>
-						</div>
-						<div class="col-sm-6">
-							<video id="vid-overlay" controls="true" autoplay="true" src="" style="text-align:center;max-width:750px;"></video>
-						</div>
-						<br/><br/>
+						<h3 id="home-mission"></h3>
+						<button id="overlay-btn" class="window-btn" onclick="closeOverlay('overlay-index')"></btn>
 					</div>
+					<video hidden id="vid-overlay" controls="true" autoplay="true" src="" style="text-align:center;max-width:750px;"></video>
 				</div>
 			</div>
 		</div>

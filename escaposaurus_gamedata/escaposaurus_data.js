@@ -81,7 +81,7 @@ var gameTitle = "The promised moutonland";
 var gameDescriptionHome = "";
 var gameMissionCall =
   "Vous vivez paisiblement votre vie de mouton à la ferme, broutant de l'herbe et regardant les avions passer.</br></br>Tout à coup, votre ami le rat arrive en courant vers vous, paniqué.</br></br>";
-var gameMissionAccept = "&raquo;&raquo; JOUER &laquo;&laquo;";
+var gameMissionAccept = "JOUER";
 
 var gameCredit = `<br/><strong>Un jeu conçu et réalisé par</strong><br/><br/>
                   Thos Jolan d'Artagnan - Conception sonore<br/>

@@ -8,17 +8,31 @@
 ////////////////////////////////////////////////////////////
 */
 
-/* by default there is no margin or padding anywhere */
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
 * {
   margin: 0px;
   padding: 0px;
+  box-sizing: border-box;
 }
-
+a {
+  color: #3DB956;
+  text-decoration: none;
+  cursor: pointer;
+}
+a:hover {
+  color: #349547;
+}
 body {
-  font-family: Arial;
+  font-family: 'VT323', Arial, sans-serif;
+  background: url(img/background.jpg) center center fixed;
+  background-size: cover;
+  image-rendering: pixelated;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
 }
 
-/*on veut la lightbox devant*/
 .lightbox-container {
   z-index: 302;
 }
@@ -50,8 +64,6 @@ video {
   src: url("img/fonts/Woodtrap/Woodtrap.otf") format("opentype");
 }
 
-/*size of the countainer defined to fit most used screen resolution*/
-/*main div container*/
 #main-container {
   display: grid;
   grid-template-columns: 1fr;
@@ -60,12 +72,8 @@ video {
   height: 100%;
   text-align: center;
   position: relative;
-
-  background: url(img/background.jpg);
-  background-position: center;
-  background-color: #84D0FD;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: rgba(120, 170, 88, 0.4);
+  overflow: hidden;
 }
 
 #main-game-div {
@@ -77,24 +85,64 @@ video {
   max-height: 800px;
   margin: auto;
   height: 100%;
-  border: 1px solid #1022cc;
+  
+  background-color: #ffebd2 !important;
+  background-image: repeating-linear-gradient(
+    180deg,
+    rgba(0,0,0,0),
+    rgba(0,0,0,0) 4px,
+    rgba(140, 70, 20, 0.05) 4px,
+    rgba(140, 70, 20, 0.05) 8px
+  ) !important;
+  border: 4px solid #3e200c !important;
+  box-shadow: inset 4px 4px 0px 0px #FFF3D4, inset -4px -4px 0px 0px #c27f42, 0 8px 16px rgba(0,0,0,0.4) !important;
+  border-radius: 0px !important;
+
   text-align: center;
   position: relative;
 }
 
 #container-homeMission {
-  background-color: white;
+  
+  background-color: #ffebd2 !important;
+  background-image: repeating-linear-gradient(
+    180deg,
+    rgba(0,0,0,0),
+    rgba(0,0,0,0) 4px,
+    rgba(140, 70, 20, 0.05) 4px,
+    rgba(140, 70, 20, 0.05) 8px
+  ) !important;
+  border: 4px solid #3e200c !important;
+  box-shadow: inset 4px 4px 0px 0px #FFF3D4, inset -4px -4px 0px 0px #c27f42, 0 8px 16px rgba(0,0,0,0.4) !important;
+  border-radius: 0px !important;
+
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-shadow: inset 4px 4px 0px rgba(255, 255, 255, 0.6), inset -4px -4px 0px rgba(139, 90, 43, 0.4), 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
 #div-homeMission {
   padding: 2rem;
   margin-top: 1rem;
-  background-color: #dcdcdc;
+  background-color: #ffebd2;
+  border: 4px solid #3e200c;
+  box-shadow: inset 4px 4px 0px 0px #FFF3D4, inset -4px -4px 0px 0px #c27f42, 0 8px 16px rgba(0,0,0,0.4);
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 20px;
 }
+#div-homeMission .col-sm-6 {
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+#overlay-btn { margin-top: 15px; }
+
 
 .header {
   display: flex;
@@ -106,7 +154,6 @@ video {
 
 #home-gameTitle,
 #os-name {
-  user-select: none;
   width: 800px;
   color: white;
   font-size: 34px;
@@ -136,39 +183,59 @@ video {
   gap: 5px;
 }
 
-/*shared style for app*/
 .app-title {
-  user-select: none;
-  position: relative;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #3DB956;
-  color: white;
+  height: 50px;
+  
+  background-color: #c27f42;
+  border-bottom: 4px solid #3e200c;
+  box-shadow: inset 0px 4px 0px 0px #FFF3D4;
+
+  color: #fffaf0;
+  text-shadow: 2px 2px 0px #5c3516;
 }
 
 .app-title-span {
-  font-family: Odibee;
-  font-size: 30px;
+  font-family: 'VT323', Odibee;
+  font-size: 32px;
+  letter-spacing: 2px;
 }
 
-/*call app*/
-#callApp {
+#callApp, #folderApp {
   max-width: 345px;
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: #FBE7BE;
-  border: 2px solid black;
-  border-radius: 16px;
+  background-color: #ffebd2;
+  
+  background-color: #ffebd2 !important;
+  background-image: repeating-linear-gradient(
+    180deg,
+    rgba(0,0,0,0),
+    rgba(0,0,0,0) 4px,
+    rgba(140, 70, 20, 0.05) 4px,
+    rgba(140, 70, 20, 0.05) 8px
+  ) !important;
+  border: 4px solid #3e200c !important;
+  box-shadow: inset 4px 4px 0px 0px #FFF3D4, inset -4px -4px 0px 0px #c27f42, 0 8px 16px rgba(0,0,0,0.4) !important;
+  border-radius: 0px !important;
+
+  box-shadow: inset 4px 4px 0px rgba(255, 255, 255, 0.6), inset -4px -4px 0px rgba(139, 90, 43, 0.4), 0 10px 20px rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
   overflow: hidden;
+}
+
+#folderApp {
+  margin-left: auto;
 }
 
 #callApp-help,
 #callApp-prompt {
   font-size: 18px;
-  color: black;
+  color: #5c3516;
   padding: 0 10px;
 }
 
@@ -183,57 +250,49 @@ video {
 }
 
 .contact-div {
-  font-size: 16px;
+  font-size: 22px;
   text-align: left;
   font-weight: bold;
-  background-color: white;
-  transition: background-color 100ms ease-out;
+  background-color: #ffebd2;
+  border: 3px solid #3e200c;
+  box-shadow: inset 3px 3px 0px 0px #FFF3D4, inset -3px -3px 0px 0px #c27f42;
+  border-radius: 0px;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  padding: 6px;
 }
 
 .contact-div:hover {
-  background-color: lightgray;
+  background-color: #fffaf0;
+  transform: scale(1.02);
   cursor: pointer;
+  border-color: #5ca135;
 }
 
 .contact-avatar {
   object-fit: cover;
-  width: 48px;
-  height: 48px;
-  margin-right: 5px;
-  transition: margin-right 100ms ease-out;
-}
-
-.contact-div:hover .contact-avatar  {
-  margin-right: 7px;
+  width: 44px;
+  height: 44px;
+  margin-right: 15px;
+  border: 2px solid #3e200c;
 }
 
 .no-call {
   font-weight: normal;
   font-style: italic;
-  background-color: rgb(126, 126, 126);
-  opacity: 0.5;
+  background-color: rgba(126, 126, 126, 0.5);
+  border-color: #777;
 }
-
 .no-call:hover {
-  background-color: rgb(110, 110, 110);
+  background-color: rgba(126, 126, 126, 0.7);
+  transform: none;
+  cursor: not-allowed;
+  border-color: #777;
 }
 
 .already-called {
   font-weight: normal;
-}
-
-/* udisk app*/
-#folderApp {
-  max-width: 345px;
-  margin-left: auto;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-
-  background-color: #FBE7BE;
-  border: 2px solid black;
-  border-radius: 16px;
-  overflow: hidden;
 }
 
 #folderApp-content {
@@ -241,10 +300,13 @@ video {
   overflow: auto;
   padding: 10px;
   text-align: left;
+  font-size: 18px;
+  color: #5c3516;
 }
 
 .window-wrapper {
-  position: fixed;
+  position: absolute;
+  z-index: 200;
   top: 0;
   left: 0;
   display: flex;
@@ -252,8 +314,8 @@ video {
   justify-content: center;
   width: 100%;
   height: 100%;
-  transition: background-color 100ms ease-out;
-  background-color: rgba(0, 0, 0, 0.4);
+  transition: background-color 200ms ease-out;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .window-wrapper:has(> .hidden) {
@@ -264,7 +326,7 @@ video {
 #overlay-index {
   width: 100%;
   height: 100%;
-  background-color: #fbe7be;
+  background: linear-gradient(180deg, #ffebd2 0%, #f3d6a0 100%);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -272,94 +334,330 @@ video {
   justify-content: center;
 }
 
-/* Shared appearance for game popups. */
-.popup-window {
-  --popup-max-width: 900px;
-  --popup-max-height: 80vh;
-  --popup-gap: 16px;
-  --popup-padding: 16px;
-  --popup-border: 2px;
-  --popup-header-height: 43px;
-  width: max-content;
-  max-width: min(var(--popup-max-width), calc(100% - 2 * var(--popup-gap)));
-  max-height: min(var(--popup-max-height), calc(100% - 2 * var(--popup-gap)));
-  z-index: 300;
-  border: 2px solid black;
-  border-radius: 16px;
-  background-color: #fbe7be;
+#callVideo-window,
+#UIvid-window,
+#notnowPrompt-window,
+#passPrompt-window,
+#wrongPassword,
+#newContact-window,
+#calling-window,
+#message-window,
+#nocall-window,
+#solution-window,
+#credit-window {
+  
+  background-color: #ffebd2 !important;
+  background-image: repeating-linear-gradient(
+    180deg,
+    rgba(0,0,0,0),
+    rgba(0,0,0,0) 4px,
+    rgba(140, 70, 20, 0.05) 4px,
+    rgba(140, 70, 20, 0.05) 8px
+  ) !important;
+  border: 4px solid #3e200c !important;
+  box-shadow: inset 4px 4px 0px 0px #FFF3D4, inset -4px -4px 0px 0px #c27f42, 0 8px 16px rgba(0,0,0,0.4) !important;
+  border-radius: 0px !important;
+
+  box-shadow: inset 4px 4px 0px rgba(255, 255, 255, 0.6), inset -4px -4px 0px rgba(139, 90, 43, 0.4), 0 10px 20px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
+  animation: barnPop 600ms ease-out forwards;
 }
 
-.popup-window > .app-title {
-  flex-shrink: 0;
-  min-height: var(--popup-header-height);
-  padding-inline: 48px;
-  text-align: center;
-  overflow-wrap: anywhere;
-}
-
-.popup-window:has(> .message-content) {
-  max-width: min(60ch, calc(100% - 32px));
-}
-
-.popup-window > .message-content {
-  overflow-wrap: anywhere;
-}
-
-.popup-window > .message-content,
-#callVideo-content,
-.dynamic-video-content {
-  width: 100%;
-  min-height: 0;
-  padding: var(--popup-padding);
-  overflow: auto;
-}
-
-.popup-window input,
-.popup-window img {
-  max-width: 100%;
-}
-
-#callVideo-window {
-  width: fit-content;
+#callVideo-window,
+#UIvid-window {
   z-index: 305;
 }
 
-#callVideo-content video,
-.popup-window .udisk-media {
+#callVideo-content {
+  padding: 1rem;
+  max-width: 100%;
+  max-height: calc(80vh - 100px);
+  overflow: auto;
+}
+
+#notnowPrompt-window,
+#passPrompt-window,
+#wrongPassword,
+#newContact-window,
+#calling-window,
+#message-window,
+#nocall-window,
+#solution-window,
+#credit-window {
+  z-index: 300;
+  width: 250px;
+}
+
+#solution-window {
+  width: 450px;
+}
+
+#credit-window {
+  width: 450px;
+}
+
+#notnowPrompt-window button,
+#passPrompt-window button,
+#wrongPassword button,
+#newContact-window button,
+#UIvid-window button,
+#callVideo-window button,
+#calling-window button,
+#message-window button,
+#nocall-window button,
+#solution-window button,
+#credit-window button,
+#overlay-index button,
+.footer-button {
+  font-family: 'VT323', Odibee, monospace;
+  font-size: 1.4rem;
+  color: #fff;
+  background: #5ca135;
+  border: 3px solid #365e1d;
+  border-radius: 6px;
+  padding: 6px 16px;
+  box-shadow: inset 2px 2px 0px rgba(255,255,255,0.4), inset -2px -2px 0px rgba(0,0,0,0.2), 0px 4px 0px #365e1d;
+  cursor: pointer;
+  transition: all 0.15s ease-out;
+  margin: 5px;
+  text-shadow: 1px 1px 0px #000;
+}
+
+#notnowPrompt-window button:hover,
+#passPrompt-window button:hover,
+#wrongPassword button:hover,
+#newContact-window button:hover,
+#UIvid-window button:hover,
+#callVideo-window button:hover,
+#calling-window button:hover,
+#message-window button:hover,
+#nocall-window button:hover,
+#solution-window button:hover,
+#credit-window button:hover,
+#overlay-index button:hover,
+.footer-button:hover {
+  background: #73c444;
+  transform: translateY(-2px);
+  box-shadow: inset 2px 2px 0px rgba(255,255,255,0.5), inset -2px -2px 0px rgba(0,0,0,0.2), 0px 6px 0px #365e1d;
+}
+
+#notnowPrompt-window button:active,
+#passPrompt-window button:active,
+#wrongPassword button:active,
+#newContact-window button:active,
+#UIvid-window button:active,
+#callVideo-window button:active,
+#calling-window button:active,
+#message-window button:active,
+#nocall-window button:active,
+#solution-window button:active,
+#credit-window button:active,
+#overlay-index button:active,
+.footer-button:active {
+  transform: translateY(4px);
+  box-shadow: inset 2px 2px 0px rgba(0,0,0,0.3), 0px 0px 0px #365e1d;
+}
+
+.message-content {
+  text-align: center;
+  color: #5c3516; /* Wood text */
+  font-size: 20px;
+  padding: 15px;
+}
+
+#passwordInput {
+  text-align: center;
+  color: #5c3516;
+  margin: 5px;
+  padding: 5px;
+  font-family: 'VT323';
+  font-size: 20px;
+  border: 3px solid #a66a38;
+  border-radius: 4px;
+  background: #fffaf0;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #a66a38;
+  border-top: 4px solid #5c3516;
+  box-shadow: inset 0px 4px 0px rgba(255,255,255,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 20px 0 10px 0;
+  z-index: 1000;
+  transform: translateY(calc(100% - 10px));
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#footer::before {
+  content: " === MENU === ";
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #5c3516;
+  color: #fff;
+  padding: 2px 20px;
+  font-family: 'VT323', monospace;
+  font-size: 1.2rem;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.3);
+}
+
+#footer:hover {
+  transform: translateY(0);
+}
+
+#password {
+  font-size: 14px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+::-webkit-input-placeholder { color: #a66a38; text-align: center; }
+:-ms-input-placeholder { color: #a66a38; text-align: center; }
+::placeholder { color: #a66a38; text-align: center; }
+
+ul {
+  margin: 0px 0px 0px 20px;
+  list-style: none;
+  line-height: 2em;
+}
+
+.arbo,
+.folder {
+  font-size: 18px;
+  position: relative;
+}
+
+.arbo:before {
+  position: absolute;
+  left: -15px;
+  top: 0px;
+  content: "";
   display: block;
-  width: auto;
-  height: auto;
-  max-width: min(
-    calc(var(--popup-max-width) - 2 * var(--popup-padding) - 2 * var(--popup-border)),
-    calc(100vw - 2 * var(--popup-gap) - 2 * var(--popup-padding) - 2 * var(--popup-border) - 16px)
-  );
-  max-height: max(1px, calc(var(--popup-max-height) - var(--popup-header-height) - 2 * var(--popup-padding) - 2 * var(--popup-border)));
-  margin: auto;
-  object-fit: contain;
+  border-left: 3px solid #a66a38;
+  height: 1em;
+  border-bottom: 3px solid #a66a38;
+  width: 10px;
+}
+
+.folder-name, .protected-name, .file-name {
+  padding-left: 24px;
+  height: 24px;
+  line-height: 24px;
+  display: inline-block;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.folder-name:hover, .protected-name:hover, .file-name:hover {
+  transform: scale(1.05) translate(4px, -1px);
+  color: #3e200c;
+  text-shadow: 1px 1px 0px #FFF3D4;
+  cursor: pointer;
+}
+.folder-name:active, .protected-name:active, .file-name:active {
+  transform: scale(0.95);
+}
+.folder-name {
+  background: url("img/iconFolder.png") left center no-repeat;
+}
+
+.protected-name {
+  background: url("img/iconPassword.png") left center no-repeat;
+}
+
+
+.file-name {
+  background: url("img/iconFile.png") left center no-repeat;
+}
+
+.arbo:after {
+  position: absolute;
+  left: -15px;
+  bottom: -7px;
+  content: "";
+  display: block;
+  border-left: 3px solid #a66a38;
+  height: 100%;
+}
+
+#rootul {
+  color: #5ca135;
+  font-weight: bold;
+}
+
+.rootLI {
+  font-size: 24px;
+  margin: 0px 0px 0px -20px;
+}
+
+.arbo:last-child:after {
+  display: none;
 }
 
 .dynamic-video-window {
-  position: relative;
+  
+  background-color: #ffebd2 !important;
+  background-image: repeating-linear-gradient(
+    180deg,
+    rgba(0,0,0,0),
+    rgba(0,0,0,0) 4px,
+    rgba(140, 70, 20, 0.05) 4px,
+    rgba(140, 70, 20, 0.05) 8px
+  ) !important;
+  border: 4px solid #3e200c !important;
+  box-shadow: inset 4px 4px 0px 0px #FFF3D4, inset -4px -4px 0px 0px #c27f42, 0 8px 16px rgba(0,0,0,0.4) !important;
+  border-radius: 0px !important;
+
+  border-radius: 8px;
+  background-color: #ffebd2;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   resize: none;
+  min-width: 320px;
+  min-height: 220px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
 }
 
 .dynamic-window-header {
   cursor: move;
   user-select: none;
+  background: #a66a38;
+  width: 100%;
+  border-bottom: 4px solid #5c3516;
 }
 
 .dynamic-video-content {
   width: 100%;
+  padding: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.dynamic-video-media {
+  display: block;
+  margin: 0 auto;
+}
+
 .udisk-media-window {
+  width: min(70vw, 900px);
+  height: min(75vh, 700px);
   overflow: hidden;
 }
 
@@ -374,242 +672,97 @@ video {
 }
 
 .udisk-media-window .dynamic-video-content {
+  flex: 1;
   min-height: 0;
-  overflow: auto;
+  overflow: hidden;
 }
 
-/*we override part of the lightbox style*/
+.window-close-cross {
+  position: absolute;
+  top: 11px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  line-height: 24px;
+  padding: 0;
+  margin: 0;
+  border-radius: 4px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  z-index: 2;
+  background: #e74c3c;
+  color: white;
+  border: 2px solid #c0392b;
+  cursor: pointer;
+}
+.window-close-cross:hover {
+  background: #c0392b;
+}
+
 .lightbox-image {
   max-width: min(70vw, 900px);
   max-height: min(70vh, 650px);
 }
 
-.popup-window .window-close-cross {
-  position: absolute;
-  top: 5px;
-  right: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  padding: 1px 0 0 0;
-  margin: 0;
-  font-family: Arial, sans-serif;
-  font-size: 40px;
-  line-height: 1;
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
-  outline: none;
-  color: white;
-}
-
-.popup-window .window-close-cross:hover {
-  color: rgba(255, 255, 255, 0.711);
-  transform: scale(1.1);
-  background-color: transparent;
-}
-
-.message-content {
-  text-align: center;
-  color: black;
-}
-
-#passwordInput {
-  text-align: center;
-  color: black;
-  margin: 5px;
-}
-
-#footer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  margin-top: 3rem;
-  padding: 1rem 0;
-  width: 100%;
-  background-color: #3DB956;
-  text-align: center;
-}
-
-.window-btn,
-.footer-button {
-  color: #000;
-  background-color: #fff;
-  border: 1px solid black;
-  border-radius: 8px;
-  padding: 4px 16px;
-  font-family: Roboto;
-  font-size: 16px;
-  font-weight: bold;
-  transition: background-color 100ms ease-out;
-}
-
-.footer-button:hover {
-  background-color: #aaa;
-  cursor: pointer;
-}
-
-#password {
-  font-size: 14px;
-}
-
-.hidden {
-  display: none;
-}
-
-/*to stylize placeholder in text input in different browser...*/
-::-webkit-input-placeholder {
-  /* Edge */
-  color: grey;
-  text-align: center;
-}
-
-:-ms-input-placeholder {
-  /* Internet Explorer */
-  color: grey;
-  text-align: center;
-}
-
-::placeholder {
-  color: grey;
-  text-align: center;
-}
-
-/*class that deals with the udrive content, tread carefully, it is working ok but very capricious*/
-ul {
-  margin: 0px 0px 0px 20px;
-  list-style: none;
-  line-height: 2em;
-  font-family: Arial;
-}
-
-.arbo,
-.folder {
-  font-size: 16px;
-  position: relative;
-}
-
-.arbo:before {
-  position: absolute;
-  left: -15px;
-  top: 0px;
-  content: "";
-  display: block;
-  border-left: 1px solid #000;
-  height: 1em;
-  border-bottom: 1px solid #000;
-  width: 10px;
-}
-
-.arbo:after {
-  position: absolute;
-  left: -15px;
-  bottom: -7px;
-  content: "";
-  display: block;
-  border-left: 1px solid #000;
-  height: 100%;
-}
-
-.arbo:last-child:after {
-  display: none;
-}
-
-.rootLI,
-.file-name,
-.folder-name,
-.protected-name {
-  user-select: none;
-  font-size: 16px;
-  display: inline-block;
-  height: 25px;
-  color: #3DB956;
-  padding-left: 20px;
-  transition:
-    background-color 100ms ease-out,
-    padding-left 100ms ease-out;
-}
-
-.rootLI {
-  margin: 0px 0px 0px -20px;
-  padding-left: 0;
-}
-
-.file-name:hover, .file-name:focus,
-.folder-name:hover, .folder-name:focus,
-.protected-name:hover, .protected-name:focus {
-  color: #349547;
-  padding-left: 22px;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.file-name {
-  background: url("img/iconFile.png") left center no-repeat;
-}
-
-.folder-name {
-  background: url("img/iconFolder.png") left center no-repeat;
-}
-
-.protected-name {
-  background: url("img/iconPassword.png") left center no-repeat;
-}
-
 @keyframes floatingTitle {
-  0% {
-    transform: translateY(2px) scale(1) rotateZ(-1deg);
-  }
-
-  50% {
-    transform: translateY(-1px) scale(1.05) rotateZ(1.5deg);
-  }
-
-  100% {
-    transform: translateY(2px) scale(1) rotateZ(-1deg);
-  }
+  0% { transform: translateY(2px) scale(1) rotateZ(-1deg); }
+  50% { transform: translateY(-3px) scale(1.02) rotateZ(1deg); }
+  100% { transform: translateY(2px) scale(1) rotateZ(-1deg); }
 }
 
-/*for the animation of the windows we open and close*/
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+@keyframes barnPop {
+  0% { opacity: 0; transform: translateY(15px) scale(0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
 
-  to {
-    opacity: 0;
-  }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes scaleIn { from { transform: scale(0); } to { transform: scale(1); } }
+@keyframes scaleOut { from { transform: scale(1); } to { transform: scale(0); } }
+#passPrompt-window button:nth-of-type(2) {
+  background: #e74c3c;
+  border-color: #c0392b;
+  box-shadow: inset 2px 2px 0px rgba(255,255,255,0.4), inset -2px -2px 0px rgba(0,0,0,0.2), 0px 4px 0px #c0392b;
+}
+#passPrompt-window button:nth-of-type(2):hover {
+  background: #c0392b;
+  box-shadow: inset 2px 2px 0px rgba(255,255,255,0.5), inset -2px -2px 0px rgba(0,0,0,0.2), 0px 6px 0px #c0392b;
+}
+#passPrompt-window button:nth-of-type(2):active {
+  box-shadow: inset 2px 2px 0px rgba(0,0,0,0.3), 0px 0px 0px #c0392b;
+  transform: translateY(4px);
 }
 
-@keyframes scaleIn {
-  from {
-    transform: scale(0);
-  }
-
-  to {
-    transform: scale(1);
-  }
+.header, #main-game-div, #footer {
+    position: relative;
+    z-index: 1;
 }
 
-@keyframes scaleOut {
-  from {
-    transform: scale(1);
-  }
 
-  to {
-    transform: scale(0);
-  }
+
+::-webkit-scrollbar {
+  width: 14px;
+}
+::-webkit-scrollbar-track {
+  background: #c27f42;
+  border: 3px solid #3e200c;
+  box-shadow: inset 2px 2px 0px 0px #975319;
+}
+::-webkit-scrollbar-thumb {
+  background: #ffdb99;
+  border: 3px solid #3e200c;
+  box-shadow: inset 2px 2px 0px 0px #fff;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FFF3D4;
+}
+
+#folderApp-content li { animation: successPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+@keyframes successPop { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+.message-content img {
+  border: 4px solid #3e200c;
+  border-radius: 4px;
+  box-shadow: inset 2px 2px 0px rgba(255,255,255,0.4), 0 4px 8px rgba(0,0,0,0.3);
 }
