@@ -77,15 +77,19 @@ var udiskData = {
 };
 
 var gameTitle = "The promised moutonland";
-var gameDescriptionHome =
-  "Ceci est une courte aventure d'exemple pour montrer ce que le framework Escaposaurus permet facilement de réaliser.<br/>Le code source est téléchargeable sur <a href='https://github.com/RedNaK/escaposaurus' target='_blank'>GitHub</a>";
+var gameDescriptionHome = "";
 var gameMissionCall =
-  "Voici la vidéo qu'Albert a envoyé à votre bureau d'informaticien spécialisé en récupération de données";
-var gameMissionAccept =
-  "&raquo;&raquo; Accepter la mission et charger la clé USB dans le serveur virtuel (JOUER) &laquo;&laquo;";
+  "Vous vivez paisiblement votre vie de mouton à la ferme, broutant de l'herbe et regardant les avions passer.</br></br>Tout à coup, votre ami le rat arrive en courant vers vous, paniqué.</br></br>";
+var gameMissionAccept = "&raquo;&raquo; JOUER &laquo;&laquo;";
 
-var gameCredit = "Un jeu conçu et réalisé par : <br/>Stéphanie Mader";
-var gameThanks = "Remerciements : <br/> ;)";
+var gameCredit = `<br/><strong>Un jeu conçu et réalisé par</strong><br/><br/>
+                  Thos Jolan d'Artagnan - Conception sonore<br/>
+                  Jammoul Ahmad - Conception visuelle<br/>
+                  Decoux Nathan - Ergonomie / UX<br/>
+                  Li John - Game design<br/>
+                  Godéré Roxane - Management de projet<br/>
+                  Barré Martin - Programmation`;
+var gameThanks = `<strong>Remerciements</strong><br/> ;)`;
 
 var OSName = "The promised moutonland";
 var explorerName = "LIEUX";
@@ -98,12 +102,12 @@ titleData.epilogueTitle = "EPILOGUE";
 titleData.callTitle = "Discussion";
 
 // change of caller app prompt for each sequence
-var promptDefault = "Rien à demander, ne pas les déranger.";
+var promptDefault = "Rien à demander, ne pas les déranger";
 var prompt = [];
 prompt[0] = "Prendre contact";
-prompt[1] = "Info 1";
-prompt[2] = "Info 2";
-prompt[3] = "Info 3";
+prompt[1] = "Prendre contact";
+prompt[2] = "Prendre contact";
+prompt[3] = "";
 
 // when the sequence number reach this, the player win, the missing contact is added and the player can call them
 var sequenceWin = 3;
@@ -122,48 +126,41 @@ seqMainHint[3] = "noHint";
 // their img need to be placed in their video folder, username is their displayed name
 var normalContacts = [];
 normalContacts[0] = {
-  vid: "Rat",
-  vod_folder: "",
-  username: "Rat",
-  canal: "video",
-  avatar: "rat.png",
-};
-normalContacts[1] = {
   vid: "Mouton 1",
   vod_folder: "",
   username: "Mouton camé",
   canal: "video",
   avatar: "mouton_came.png",
 };
-normalContacts[2] = {
+normalContacts[1] = {
   vid: "Mouton 2",
   vod_folder: "",
   username: "Mouton intello",
   canal: "video",
   avatar: "mouton_intello.png",
 };
-normalContacts[3] = {
+normalContacts[2] = {
   vid: "Mouton 3",
   vod_folder: "",
   username: "Mouton noir",
   canal: "video",
   avatar: "mouton_noir.png",
 };
-normalContacts[4] = {
+normalContacts[3] = {
   vid: "Mouton 4",
   vod_folder: "",
   username: "Dinnerbone",
   canal: "video",
   avatar: "mouton_dinnerbone.png",
 };
-normalContacts[5] = {
+normalContacts[4] = {
   vid: "Mouton 5",
   vod_folder: "",
   username: "Mouton rasé",
   canal: "video",
   avatar: "mouton_rase.png",
 };
-normalContacts[6] = {
+normalContacts[5] = {
   vid: "Mouton 6",
   vod_folder: "",
   username: "Mouton paniqué",
@@ -173,6 +170,13 @@ normalContacts[6] = {
 
 // second part of the list, contact that can help the player
 var helperContacts = [];
+helperContacts[0] = {
+  vid: "Rat",
+  vod_folder: "",
+  username: "Rat",
+  canal: "video",
+  avatar: "rat.png",
+};
 // helperContacts[0] = {
 //   vid: "Albert",
 //   vod_folder: "",

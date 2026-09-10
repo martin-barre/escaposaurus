@@ -14,7 +14,14 @@
   padding: 0px;
 }
 a {
-  color: #1022cc;
+  color: #3DB956;
+  text-decoration: none;
+  cursor: pointer;
+}
+a:hover {
+  color: #349547;
+  text-decoration: none;
+  cursor: pointer;
 }
 body {
   font-family: Arial;
@@ -27,8 +34,8 @@ body {
 
 video {
   object-fit: contain;
-  max-width: 800px;
-  max-height: calc(100vh - 24rem);
+  max-width: min(65vw, 680px);
+  max-height: min(60vh, 520px);
 }
 
 @font-face {
@@ -131,22 +138,20 @@ video {
 }
 
 #help-contact {
-  display: none;
-  /* flex: 1;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 5px; */
+  gap: 5px;
 }
 
 /*shared style for app*/
 .app-title {
+  position: relative;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 50px;
-  background-color: #3D7EB9;
+  background-color: #3DB956;
   color: white;
 }
 
@@ -170,12 +175,17 @@ video {
 #callApp-help,
 #callApp-prompt {
   font-size: 18px;
-  padding: 10px 10px 0 10px;
   color: black;
+  padding: 0 10px;
+}
+
+#callApp-help {
+  margin-top: 10px;
 }
 
 .contact-list {
-  padding: 10px;
+  padding: 0 10px;
+  margin: 10px 0;
   text-align: left;
 }
 
@@ -235,7 +245,7 @@ video {
 }
 
 .window-wrapper {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   display: flex;
@@ -263,18 +273,18 @@ video {
   justify-content: center;
 }
 
-/*the "windows" we open for video and message/password*/
-#callVideo-window,
-#UIvid-window,
-#notnowPrompt-window,
-#passPrompt-window,
-#wrongPassword,
-#newContact-window,
-#calling-window,
-#message-window,
-#nocall-window,
-#solution-window,
-#credit-window {
+/* Shared appearance for game popups. */
+.popup-window {
+  --popup-max-width: 900px;
+  --popup-max-height: 80vh;
+  --popup-gap: 16px;
+  --popup-padding: 16px;
+  --popup-border: 2px;
+  --popup-header-height: 43px;
+  width: max-content;
+  max-width: min(var(--popup-max-width), calc(100% - 2 * var(--popup-gap)));
+  max-height: min(var(--popup-max-height), calc(100% - 2 * var(--popup-gap)));
+  z-index: 300;
   border: 2px solid black;
   border-radius: 16px;
   background-color: #fbe7be;
@@ -284,85 +294,127 @@ video {
   align-items: center;
 }
 
-#callVideo-window,
-#UIvid-window {
+.popup-window > .app-title {
+  flex-shrink: 0;
+  min-height: var(--popup-header-height);
+  padding-inline: 48px;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.popup-window:has(> .message-content) {
+  max-width: min(60ch, calc(100% - 32px));
+}
+
+.popup-window > .message-content {
+  overflow-wrap: anywhere;
+}
+
+.popup-window > .message-content,
+#callVideo-content,
+.dynamic-video-content {
+  width: 100%;
+  min-height: 0;
+  padding: var(--popup-padding);
+  overflow: auto;
+}
+
+.popup-window input,
+.popup-window img {
+  max-width: 100%;
+}
+
+#callVideo-window {
+  width: fit-content;
   z-index: 305;
 }
 
-#callVideo-content {
-  padding: 1rem;
+#callVideo-content video,
+.popup-window .udisk-media {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(
+    calc(var(--popup-max-width) - 2 * var(--popup-padding) - 2 * var(--popup-border)),
+    calc(100vw - 2 * var(--popup-gap) - 2 * var(--popup-padding) - 2 * var(--popup-border) - 16px)
+  );
+  max-height: max(1px, calc(var(--popup-max-height) - var(--popup-header-height) - 2 * var(--popup-padding) - 2 * var(--popup-border)));
+  margin: auto;
+  object-fit: contain;
 }
 
-#notnowPrompt-window,
-#passPrompt-window,
-#wrongPassword,
-#newContact-window,
-#calling-window,
-#message-window,
-#nocall-window,
-#solution-window,
-#credit-window {
-  z-index: 300;
-  width: 200px;
+.dynamic-video-window {
+  position: relative;
+  resize: none;
 }
 
-#solution-window {
-  width: 400px;
+.dynamic-window-header {
+  cursor: move;
+  user-select: none;
 }
 
-#credit-window {
-  width: 400px;
+.dynamic-video-content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.udisk-media-window {
+  overflow: hidden;
+}
+
+.udisk-media {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.udisk-media-window .dynamic-video-content {
+  min-height: 0;
+  overflow: auto;
 }
 
 /*we override part of the lightbox style*/
 .lightbox-image {
-  max-height: 90vh;
+  max-width: min(70vw, 900px);
+  max-height: min(70vh, 650px);
 }
 
-#notnowPrompt-window button,
-#passPrompt-window button,
-#wrongPassword button,
-#newContact-window button,
-#UIvid-window button,
-#callVideo-window button,
-#calling-window button,
-#message-window button,
-#nocall-window button,
-#solution-window button,
-#credit-window button,
-#overlay-index button {
-  color: #000;
-  background-color: #fff;
-  border: 1px solid black;
-  border-radius: 8px;
-  padding: 4px 16px;
-  font-family: Roboto;
-  font-size: 16px;
-  font-weight: bold;
-  transition: background-color 100ms ease-out;
-  margin-bottom: 1rem;
-}
-
-#notnowPrompt-window button:hover,
-#passPrompt-window button:hover,
-#wrongPassword button:hover,
-#newContact-window button:hover,
-#UIvid-window button:hover,
-#callVideo-window button:hover,
-#calling-window button:hover,
-#message-window button:hover,
-#nocall-window button:hover,
-#solution-window button:hover,
-#credit-window button:hover,
-#overlay-index button:hover {
-  background-color: #aaa;
+.popup-window .window-close-cross {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 1px 0 0 0;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  font-size: 40px;
+  line-height: 1;
   cursor: pointer;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: white;
+}
+
+.popup-window .window-close-cross:hover {
+  color: rgba(255, 255, 255, 0.711);
+  transform: scale(1.1);
+  background-color: transparent;
 }
 
 .message-content {
   text-align: center;
   color: black;
-  padding: 5px;
 }
 
 #passwordInput {
@@ -379,10 +431,11 @@ video {
   margin-top: 3rem;
   padding: 1rem 0;
   width: 100%;
-  background-color: #3D7EB9;
+  background-color: #3DB956;
   text-align: center;
 }
 
+.window-btn,
 .footer-button {
   color: #000;
   background-color: #fff;
@@ -458,11 +511,6 @@ ul {
   display: inline-block;
   padding-left: 20px;
   height: 25px;
-  color: black;
-}
-
-.folder-name:hover {
-  text-decoration: none;
 }
 
 .protected-name {
@@ -497,6 +545,10 @@ ul {
   display: block;
   border-left: 1px solid #000;
   height: 100%;
+}
+
+#rootul {
+  color: #3DB956;
 }
 
 .rootLI {
