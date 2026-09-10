@@ -8,12 +8,20 @@
 ////////////////////////////////////////////////////////////
 */
 
-@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@font-face {
+  font-family: VT323;
+  src: url("img/fonts/VT323/VT323-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: Woodcut;
+  src: url("img/fonts/Woodcut/Woodcut.ttf") format("truetype");
+}
 
-* {
+*, *::after, *::before {
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+  user-select: none;
 }
 a {
   color: #5ca135;
@@ -24,7 +32,7 @@ a:hover {
   color: #73c444;
 }
 body {
-  font-family: 'VT323', Arial, sans-serif;
+  font-family: VT323, Arial, sans-serif;
   background: url(img/background.jpg) center center fixed;
   background-size: cover;
   image-rendering: auto;
@@ -43,27 +51,6 @@ video {
   height: 100%;
   max-width: min(65vw, 680px);
   max-height: min(60vh, 520px);
-}
-
-@font-face {
-  font-family: Roboto;
-  src: url("img/fonts/Roboto/Roboto-Light.ttf") format("truetype");
-}
-@font-face {
-  font-family: Odibee;
-  src: url("img/fonts/Odibee_Sans/OdibeeSans-Regular.ttf") format("truetype");
-}
-@font-face {
-  font-family: Rustichome;
-  src: url("img/fonts/Rustichome/Rustichome.otf") format("opentype");
-}
-@font-face {
-  font-family: Woodcut;
-  src: url("img/fonts/Woodcut/Woodcut.ttf") format("truetype");
-}
-@font-face {
-  font-family: Woodtrap;
-  src: url("img/fonts/Woodtrap/Woodtrap.otf") format("opentype");
 }
 
 #main-container {
@@ -126,8 +113,8 @@ video {
 }
 
 #div-homeMission {
-  padding: 2rem;
-  margin-top: 1rem;
+  padding: 4rem;
+  margin: 4rem;
   background-color: #ffebd2;
   border: 4px solid #3e200c;
   box-shadow: inset 4px 4px 0px 0px #FFF3D4, inset -4px -4px 0px 0px #c27f42, 0 8px 16px rgba(0,0,0,0.4);
@@ -156,7 +143,7 @@ video {
 
 #home-gameTitle,
 #os-name {
-  width: 800px;
+  width: 450px;
   color: white;
   font-size: 34px;
   font-family: Woodcut;
@@ -201,7 +188,6 @@ video {
 }
 
 .app-title-span {
-  font-family: 'VT323', Odibee;
   font-size: 32px;
   letter-spacing: 2px;
 }
@@ -329,9 +315,10 @@ video {
 }
 
 #overlay-index {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(180deg, #ffebd2 0%, #f3d6a0 100%);
+  width: 960px;
+  height: auto;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 32px);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -340,16 +327,9 @@ video {
 }
 
 #overlay-index #home-gameTitle {
-  width: auto;
-  margin: 0 0 1rem;
-  font-size: clamp(42px, 6vw, 78px);
-  line-height: 1.05;
-}
-
-#overlay-index #home-gameDescription {
-  max-width: 760px;
-  font-size: 24px;
-  line-height: 1.25;
+  width: 620px;
+  margin: 4rem 0;
+  font-size: 48px;
 }
 
 #overlay-index #overlay-btn {
@@ -386,10 +366,12 @@ video {
 }
 
 #callVideo-content {
+  width: fit-content;
+  height: fit-content;
   padding: 2rem;
   max-width: 100%;
   max-height: calc(80vh - 100px);
-  overflow: auto;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -399,8 +381,7 @@ video {
 .fullscreen-popup button,
 #overlay-index button,
 .footer-button {
-  font-family: 'VT323', Odibee, monospace;
-  font-size: 1.4rem;
+  font-size: 2.5rem;
   color: #fff;
   background: #5ca135;
   border: 3px solid #365e1d;
@@ -436,10 +417,16 @@ video {
 }
 
 .message-content {
+  width: fit-content;
+  height: auto;
+  max-width: calc(100vw - 64px);
+  max-height: calc(100vh - 96px);
+  overflow: hidden;
   text-align: center;
   color: #5c3516; /* Wood text */
   font-size: 20px;
   padding: 2rem;
+  overflow-wrap: anywhere;
 }
 
 #passwordInput {
@@ -447,7 +434,6 @@ video {
   color: #5c3516;
   margin: 5px;
   padding: 5px;
-  font-family: 'VT323';
   font-size: 20px;
   border: 3px solid #a66a38;
   border-radius: 4px;
@@ -481,7 +467,6 @@ video {
   background: #5c3516;
   color: #fff;
   padding: 2px 20px;
-  font-family: 'VT323', monospace;
   font-size: 1.6rem;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
@@ -536,11 +521,13 @@ ul {
   display: inline-block;
   transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-.folder-name:hover, .protected-name:hover, .file-name:hover {
+
+.folder-name:hover, .protected-name:hover, .file-name:hover,
+.folder-name:focus, .protected-name:focus, .file-name:focus {
   transform: scale(1.05) translate(4px, -1px);
-  color: #3e200c;
-  text-shadow: 1px 1px 0px #FFF3D4;
   cursor: pointer;
+  text-decoration: none;
+  color: #73c444;
 }
 .folder-name:active, .protected-name:active, .file-name:active {
   transform: scale(0.95);
@@ -582,32 +569,35 @@ ul {
   display: none;
 }
 
+#spoiler, #spoiler * {
+  user-select: text;
+}
+
 /* Two popup modes share the same frame and controls. */
 .popup,
 .fullscreen-popup {
   position: relative;
   width: fit-content;
-  min-width: min(250px, calc(100vw - 32px));
-  height: fit-content;
+  min-width: 0;
+  height: auto;
   max-width: calc(100vw - 32px);
   max-height: calc(100vh - 32px);
-  overflow: auto;
+  overflow: hidden;
   pointer-events: auto;
 }
 
 .fullscreen-popup.overlay-popup {
-  width: 100%;
-  height: 100%;
+  width: fit-content;
+  height: auto;
   min-width: 0;
-  max-width: none;
-  max-height: none;
-  border: 0 !important;
-  padding: 20px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 32px);
+  padding: 2rem;
 }
 
 .fullscreen-popup {
-  width: min-content;
-  height: min-content;
+  width: fit-content;
+  height: auto;
 }
 
 .window-wrapper:has(> .popup) {
@@ -618,6 +608,12 @@ ul {
 .window-wrapper:has(> .fullscreen-popup) {
   position: fixed;
   inset: 0;
+}
+
+.window-wrapper:has(> .overlay-popup:not(.hidden)) {
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .popup > .app-title,
@@ -639,18 +635,25 @@ ul {
 }
 
 .dynamic-video-content {
-  width: 100%;
+  width: fit-content;
+  height: fit-content;
   max-width: calc(100vw - 64px);
   max-height: calc(100vh - 120px);
   padding: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .dynamic-video-media {
   display: block;
+  width: auto;
+  height: auto;
+  max-width: calc(100vw - 80px);
+  max-height: calc(100vh - 220px);
   margin: 0 auto;
+  object-fit: contain;
 }
 
 .udisk-media-window {
@@ -672,7 +675,7 @@ ul {
 }
 
 .udisk-media-window .dynamic-video-content {
-  flex: 1;
+  flex: 0 0 auto;
   min-height: 0;
   overflow: hidden;
 }
@@ -687,7 +690,6 @@ ul {
   padding: 0 !important;
   margin: 0 !important;
   border-radius: 6px !important;
-  font-family: Arial, sans-serif;
   font-size: 22px;
   font-weight: bold;
   text-align: center;
@@ -775,7 +777,7 @@ ul {
   box-shadow: inset 2px 2px 0px rgba(255,255,255,0.4), 0 4px 8px rgba(0,0,0,0.3);
   width: auto;
   height: auto;
-  max-width: 100%;
-  max-height: calc(100vh - 180px);
+  max-width: min(100%, calc(100vw - 80px));
+  max-height: calc(100vh - 220px);
   object-fit: contain;
 }

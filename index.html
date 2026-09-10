@@ -182,7 +182,7 @@
 				<br/>
 				<span id="added"></span><br/>
 				<br/>
-				<button class="window-btn" onclick="closeNewContact('newContact-window')">OK</button>
+				<button class="window-btn" onclick="closeIt('newContact-window')">OK</button>
 			</div>
 		</div>
 	</div>
@@ -222,7 +222,7 @@
 				<button class="window-close-cross" type="button" aria-label="Fermer" onclick="closeIt('nocall-window')">&times;</button>
 			</div>
 			<div class="message-content">
-				Appel impossible pour le moment<br/>
+				Action impossible pour le moment<br/>
 			</div>
 		</div>
 	</div>
@@ -273,12 +273,10 @@
 	<div class="window-wrapper">
 		<div id="overlay-index" class="fullscreen-popup overlay-popup">
 			<h3 id="home-gameTitle"></h3>
-			<span id="home-gameDescription"></span>
 			<div id="div-homeMission">
 				<h3 id="home-mission"></h3>
 				<button id="overlay-btn" class="window-btn" onclick="closeOverlay('overlay-index')"></button>
 			</div>
-			<video hidden id="vid-overlay" controls="true" autoplay="true" src="" style="text-align:center;max-width:750px;"></video>
 		</div>
 	</div>
 </body>

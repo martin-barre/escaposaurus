@@ -1,4 +1,3 @@
-<!--
 /////////////////////////////////////////////////////////////
 /// Escaposaurus v1 (2020)
 ///	A quick and dirty framework to create small adventure game (certified vanilla JS)
@@ -6,7 +5,6 @@
 /// GitHub: https://github.com/RedNaK/escaposaurus
 ///	Licence: MIT
 ////////////////////////////////////////////////////////////
--->
 
 
 /*some needed initialization*/
@@ -33,10 +31,8 @@ function loadDataIntoHTML(){
 	/*load html content from data*/
 	document.title = gameTitle ;
 	document.getElementById("home-gameTitle").innerHTML = gameTitle ;
-	document.getElementById("home-gameDescription").innerHTML = gameDescriptionHome ;
 	document.getElementById("home-mission").innerHTML = gameMissionCall ;
 	document.getElementById("overlay-btn").innerHTML = gameMissionAccept ;
-	document.getElementById("vid-overlay").src = missionVideoPath ;
 
 	document.getElementById("added").innerHTML = finalStepAdded ;
 
@@ -54,7 +50,6 @@ function loadDataIntoHTML(){
 
 
 function closeOverlay(overlay){
-	document.getElementById("vid-overlay").pause() ;
 	if(gameStart===false){
 		if(isLocal === true){
 			startGameLocally(overlay)  ;
@@ -118,7 +113,7 @@ function loadGame(folders, files, overlay){
     /*ok y'a un truc de sécurité qui fait que ça n'auto-play pas si y'a pas eu un click avant*/
     /*faudra juste faire un message, call entrant, puis ok qui ouvre cette vidéo*/
     setTimeout(function () {
-		openIt('calling-window') ;
+		openVideoWindow('intro');
 	},500);
 }
 
@@ -383,13 +378,23 @@ function createContactList(){
 	}
 
 	/*create normal contact*/
-	for(var i = 0 ; i < normalContacts.length ; i++){
-		createContact(normalContacts[i], nc) ;
+	document.getElementById('callApp-prompt').hidden = sequenceNumber !== 0;
+	if (sequenceNumber === 0) {
+		for(var i = 0 ; i < normalContacts.length ; i++){
+			createContact(normalContacts[i], nc) ;
+		}
 	}
 
 	/*create helper contact*/
-	for(var i = 0 ; i < helperContacts.length ; i++){
-		createContact(helperContacts[i], hc) ;
+	if (sequenceNumber < sequenceWin) {
+		for(var i = 0 ; i < helperContacts.length ; i++){
+			createContact(helperContacts[i], hc) ;
+		}
+	}
+
+	/*create missing contact*/
+	if (sequenceNumber >= sequenceWin) {
+		createContact(missingContact, hc) ;
 	}
 }
 
@@ -600,6 +605,10 @@ function closeVideoWindow(parentElem){
 function bringVideoWindowToFront(windowElem){
 	topVideoWindowZIndex++;
 	windowElem.style.zIndex = topVideoWindowZIndex;
+	var parent = windowElem.parentElement;
+	if(parent && parent.classList.contains("window-wrapper")){
+		parent.style.zIndex = topVideoWindowZIndex;
+	}
 }
 
 function bringSystemWindowToFront(windowElem){
@@ -676,12 +685,16 @@ function startWindowDrag(evt, windowElem){
 	}
 	evt.preventDefault();
 	bringVideoWindowToFront(windowElem);
+	var windowRect = windowElem.getBoundingClientRect();
+	windowElem.style.position = "fixed";
+	windowElem.style.left = windowRect.left + "px";
+	windowElem.style.top = windowRect.top + "px";
+	windowElem.style.right = "auto";
+	windowElem.style.bottom = "auto";
 	dragState = {
 		windowElem: windowElem,
-		startX: evt.clientX,
-		startY: evt.clientY,
-		startLeft: windowElem.offsetLeft,
-		startTop: windowElem.offsetTop
+		offsetX: evt.clientX - windowRect.left,
+		offsetY: evt.clientY - windowRect.top
 	};
 	document.addEventListener("mousemove", onWindowDrag);
 	document.addEventListener("mouseup", stopWindowDrag);
@@ -691,10 +704,8 @@ function onWindowDrag(evt){
 	if(dragState === null){
 		return;
 	}
-	var dx = evt.clientX - dragState.startX;
-	var dy = evt.clientY - dragState.startY;
-	dragState.windowElem.style.left = (dragState.startLeft + dx) + "px";
-	dragState.windowElem.style.top = (dragState.startTop + dy) + "px";
+	dragState.windowElem.style.left = (evt.clientX - dragState.offsetX) + "px";
+	dragState.windowElem.style.top = (evt.clientY - dragState.offsetY) + "px";
 }
 
 function stopWindowDrag(){
@@ -750,7 +761,7 @@ function changingSequence(){
 			unlockContacts() ;
 		}
 	}
-
+	createContactList() ;
 }
 
 function win(){
@@ -768,36 +779,24 @@ function win(){
 	}
 }
 
-function closeNewContact(d){
-	closeIt(d) ;
-	var nc = document.getElementById("normal-contact") ;
-	createContact(missingContact, nc) ;
-}
-
 function closeAppelEntrant(d){
 	closeIt(d) ;
 
-	if(winState === false){
-		openVideoWindow('intro') ;
-	}else{
+	if(winState === true) {
 		openEpilogue() ;
 	}
 }
 
 /*via eventlistener, callback that open the end of the game (epilogue and credit video)*/
 var callbackCloseMissingCall = function(){
-	setTimeout(function () {
-		openIt('calling-window') ;
-	},1000);
+	setTimeout(() => openEpilogue(), 500);
 }
 
 function openEpilogue(){
-	setTimeout(function () {
-		openVideoWindow('epilogue') ;
-		var x = document.getElementById('button-outro');
-		x.style.animation = [animation.scaleIn, animation.fadeIn];
-		x.classList.remove('hidden');
-	},1000);
+	openVideoWindow('epilogue') ;
+	var x = document.getElementById('button-outro');
+	x.style.animation = [animation.scaleIn, animation.fadeIn];
+	x.classList.remove('hidden');
 }
 
 /* HELP AND SOLUTION BOX */

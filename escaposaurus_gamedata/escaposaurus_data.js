@@ -20,8 +20,7 @@ var videoRoot = gameDataRoot + "videos/";
 var contactVideoRoot = videoRoot + "contactVideo/";
 
 // full path to intro / outro video
-var missionVideoPath = videoRoot + "introVideo/intro1.mp4";
-var introVideoPath = videoRoot + "introVideo/intro2.mp4";
+var introVideoPath = videoRoot + "introVideo/intro.mp4";
 var missingVideoPath = videoRoot + "contactVideo/missing/final.mp4";
 var epilogueVideoPath = videoRoot + "epilogueVideo/epiloguecredit.mp4";
 
@@ -78,10 +77,9 @@ var udiskData = {
 };
 
 var gameTitle = "The promised moutonland";
-var gameDescriptionHome = "";
 var gameMissionCall =
-  "Vous vivez paisiblement votre vie de mouton à la ferme, broutant de l'herbe et regardant les avions passer.</br></br>Tout à coup, votre ami le rat arrive en courant vers vous, paniqué.</br></br>";
-var gameMissionAccept = "JOUER";
+  "Vous vivez paisiblement votre vie de mouton à la ferme, broutant de l’herbe et regardant les avions passer. Tout à coup, votre ami le rat arrive en courant vers vous, paniqué. Vous sentez dès lors que quelque chose se trame… Sortez votre journal et préparez-vous à prendre des notes, votre grande escapade commence !";
+var gameMissionAccept = "&raquo;&raquo; JOUER &laquo;&laquo;";
 
 var gameCredit = `<br/><strong>Un jeu conçu et réalisé par</strong><br/><br/>
                   Thos Jolan d'Artagnan - Conception sonore<br/>
@@ -125,68 +123,61 @@ seqMainHint[3] = "noHint";
 // contact list, vid is the name of their folder in the videoContact folder,
 // then the game autoload the video named seq%number of the current sequence%, e.g. seq0.MP4 for the first sequence (numbered 0 because computer science habits)
 // their img need to be placed in their video folder, username is their displayed name
-var normalContacts = [];
-normalContacts[0] = {
-  vid: "Mouton 1",
-  vod_folder: "",
-  username: "Mouton camé",
-  canal: "video",
-  avatar: "mouton_came.png",
-};
-normalContacts[1] = {
-  vid: "Mouton 2",
-  vod_folder: "",
-  username: "Mouton intello",
-  canal: "video",
-  avatar: "mouton_intello.png",
-};
-normalContacts[2] = {
-  vid: "Mouton 3",
-  vod_folder: "",
-  username: "Mouton noir",
-  canal: "video",
-  avatar: "mouton_noir.png",
-};
-normalContacts[3] = {
-  vid: "Mouton 4",
-  vod_folder: "",
-  username: "Dinnerbone",
-  canal: "video",
-  avatar: "mouton_dinnerbone.png",
-};
-normalContacts[4] = {
-  vid: "Mouton 5",
-  vod_folder: "",
-  username: "Mouton rasé",
-  canal: "video",
-  avatar: "mouton_rase.png",
-};
-normalContacts[5] = {
-  vid: "Mouton 6",
-  vod_folder: "",
-  username: "Mouton paniqué",
-  canal: "video",
-  avatar: "mouton_panique.png",
-};
+var normalContacts = [
+  {
+    vid: "Mouton 1",
+    vod_folder: "",
+    username: "Mouton camé",
+    canal: "video",
+    avatar: "mouton_came.png",
+  },
+  {
+    vid: "Mouton 2",
+    vod_folder: "",
+    username: "Mouton intello",
+    canal: "video",
+    avatar: "mouton_intello.png",
+  },
+  {
+    vid: "Mouton 3",
+    vod_folder: "",
+    username: "Mouton noir",
+    canal: "video",
+    avatar: "mouton_noir.png",
+  },
+  {
+    vid: "Mouton 4",
+    vod_folder: "",
+    username: "Dinnerbone",
+    canal: "video",
+    avatar: "mouton_dinnerbone.png",
+  },
+  {
+    vid: "Mouton 5",
+    vod_folder: "",
+    username: "Mouton rasé",
+    canal: "video",
+    avatar: "mouton_rase.png",
+  },
+  {
+    vid: "Mouton 6",
+    vod_folder: "",
+    username: "Mouton paniqué",
+    canal: "video",
+    avatar: "mouton_panique.png",
+  }
+];
 
 // second part of the list, contact that can help the player
-var helperContacts = [];
-helperContacts[0] = {
-  vid: "Rat",
-  vod_folder: "",
-  username: "Rat",
-  canal: "video",
-  avatar: "rat.png",
-};
-// helperContacts[0] = {
-//   vid: "Albert",
-//   vod_folder: "",
-//   username: "Albert (pour avoir un indice)",
-//   canal: "txt",
-//   avatar: "albert.png",
-//   bigAvatar: "albertbig.png",
-// };
-// helperContacts[1] = {"vid" : "Lou", "username" : "Lou (pour avoir un deuxième indice) - par message", "canal" : "txt", "avatar" : "Lou_opt.jpg", "bigAvatar" : "avatarHelper2Big.gif"};
+var helperContacts = [
+  {
+    vid: "Rat",
+    vod_folder: "",
+    username: "Rat",
+    canal: "video",
+    avatar: "rat.png",
+  }
+];
 
 // ce qui apparait quand on trouve le dernier élément du disque dur
 finalStepAdded = "Évasion réussie.";
