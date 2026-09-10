@@ -67,6 +67,7 @@ video {
 
 #main-game-div {
   flex: auto;
+  margin-bottom: 6rem;
 }
 
 #main-container-index {
@@ -193,6 +194,7 @@ video {
 }
 
 #callApp, #folderApp {
+  max-height: 645px;
   max-width: 345px;
   display: flex;
   flex-direction: column;
@@ -745,7 +747,7 @@ ul {
   transform: translateY(4px);
 }
 
-.header, #main-game-div, #footer {
+.header, #main-game-div {
     position: relative;
     z-index: 1;
 }
