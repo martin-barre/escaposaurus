@@ -118,8 +118,8 @@ function loadGame(folders, files, overlay){
     /*ok y'a un truc de sécurité qui fait que ça n'auto-play pas si y'a pas eu un click avant*/
     /*faudra juste faire un message, call entrant, puis ok qui ouvre cette vidéo*/
     setTimeout(function () {
-		openIt('calling-window') ;
-	},500);
+		openVideoWindow('intro');
+	}, 500);
 }
 
 
@@ -789,7 +789,7 @@ function closeAppelEntrant(d){
 	closeIt(d) ;
 
 	if(winState === false){
-		openVideoWindow('intro') ;
+		openVideoWindow('intro');
 	}else{
 		openEpilogue() ;
 	}

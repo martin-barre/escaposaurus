@@ -13,16 +13,7 @@
   margin: 0px;
   padding: 0px;
 }
-a {
-  color: #3DB956;
-  text-decoration: none;
-  cursor: pointer;
-}
-a:hover {
-  color: #349547;
-  text-decoration: none;
-  cursor: pointer;
-}
+
 body {
   font-family: Arial;
 }
@@ -115,6 +106,7 @@ video {
 
 #home-gameTitle,
 #os-name {
+  user-select: none;
   width: 800px;
   color: white;
   font-size: 34px;
@@ -146,6 +138,7 @@ video {
 
 /*shared style for app*/
 .app-title {
+  user-select: none;
   position: relative;
   width: 100%;
   display: flex;
@@ -194,6 +187,7 @@ video {
   text-align: left;
   font-weight: bold;
   background-color: white;
+  transition: background-color 100ms ease-out;
 }
 
 .contact-div:hover {
@@ -206,6 +200,11 @@ video {
   width: 48px;
   height: 48px;
   margin-right: 5px;
+  transition: margin-right 100ms ease-out;
+}
+
+.contact-div:hover .contact-avatar  {
+  margin-right: 7px;
 }
 
 .no-call {
@@ -505,38 +504,6 @@ ul {
   width: 10px;
 }
 
-.folder-name {
-  background: url("img/iconFolder.png") left center no-repeat;
-  content: "";
-  display: inline-block;
-  padding-left: 20px;
-  height: 25px;
-}
-
-.protected-name {
-  background: url("img/iconPassword.png") left center no-repeat;
-  content: "";
-  display: inline-block;
-  padding-left: 20px;
-  height: 25px;
-}
-
-.protected-name:hover {
-  cursor: pointer;
-}
-
-.file-name {
-  background: url("img/iconFile.png") left center no-repeat;
-  content: "";
-  display: inline-block;
-  padding-left: 20px;
-  height: 25px;
-}
-
-.file-name:hover {
-  cursor: pointer;
-}
-
 .arbo:after {
   position: absolute;
   left: -15px;
@@ -547,17 +514,49 @@ ul {
   height: 100%;
 }
 
-#rootul {
+.arbo:last-child:after {
+  display: none;
+}
+
+.rootLI,
+.file-name,
+.folder-name,
+.protected-name {
+  user-select: none;
+  font-size: 16px;
+  display: inline-block;
+  height: 25px;
   color: #3DB956;
+  padding-left: 20px;
+  transition:
+    background-color 100ms ease-out,
+    padding-left 100ms ease-out;
 }
 
 .rootLI {
-  font-size: 16px;
   margin: 0px 0px 0px -20px;
+  padding-left: 0;
 }
 
-.arbo:last-child:after {
-  display: none;
+.file-name:hover, .file-name:focus,
+.folder-name:hover, .folder-name:focus,
+.protected-name:hover, .protected-name:focus {
+  color: #349547;
+  padding-left: 22px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.file-name {
+  background: url("img/iconFile.png") left center no-repeat;
+}
+
+.folder-name {
+  background: url("img/iconFolder.png") left center no-repeat;
+}
+
+.protected-name {
+  background: url("img/iconPassword.png") left center no-repeat;
 }
 
 @keyframes floatingTitle {
