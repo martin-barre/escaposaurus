@@ -86,9 +86,7 @@
 						<div class="app-title">
 							<span class="app-title-span" id="callerApp-name"></span>
 						</div>
-						<div id="callApp-help">
-							Contacter le rat
-						</div>
+						<div id="callApp-help">Contacter le rat</div>
 						<div id="help-contact" class="contact-list"></div>
 						<div id="callApp-prompt"></div>
 						<div id="normal-contact" class="contact-list"></div>
@@ -125,10 +123,10 @@
 
 	<!--CALL WINDOW-->
 	<div class="window-wrapper">
-		<div id="callVideo-window" class="popup-window hidden">
+		<div id="callVideo-window" class="fullscreen-popup hidden">
 			<div class="app-title">
 				<span id="callVideo-title" class="app-title-span">APPEL EN COURS</span>
-				<button id="btn-closecall" class="window-close-cross" type="button" aria-label="Fermer" onclick="closeVideoWindow(this.closest('.popup-window'))">&times;</button>
+				<button id="btn-closecall" class="window-close-cross" type="button" aria-label="Fermer" onclick="closeVideoWindow(this.closest('.fullscreen-popup'))">&times;</button>
 			</div>
 			<div id="callVideo-content">	</div>
 		</div>
@@ -136,7 +134,7 @@
 
 	<!--PASSWORD CAN'T UNLOCK NOW-->
 	<div class="window-wrapper">
-		<div id="notnowPrompt-window" class="popup-window hidden">
+		<div id="notnowPrompt-window" class="fullscreen-popup hidden">
 			<div class="app-title"><span class="app-title-span">PROTEGE</span></div>
 			<div class="message-content">
 				Le lieu <strong id="folderN"></strong> est inaccessible pour le moment<br/><br/>
@@ -147,7 +145,7 @@
 	
 	<!--PASSWORD PROMPT-->
 	<div class="window-wrapper">
-		<div id="passPrompt-window" class="popup-window hidden">
+		<div id="passPrompt-window" class="fullscreen-popup hidden">
 			<div class="app-title">
 				<span class="app-title-span">PROTEGE</span>
 				<button class="window-close-cross" type="button" aria-label="Fermer" onclick="closeIt('passPrompt-window')">&times;</button>
@@ -165,7 +163,7 @@
 
 	<!-- WRONG PASSWORD MSG -->
 	<div class="window-wrapper">
-		<div id="wrongPassword" class="popup-window hidden">
+		<div id="wrongPassword" class="fullscreen-popup hidden">
 			<div class="app-title"><span class="app-title-span">:(</span></div>
 			<div class="message-content">
 				<br/>
@@ -178,7 +176,7 @@
 
 	<!-- NOUVEAU CONTACT -->
 	<div class="window-wrapper">
-		<div id="newContact-window" class="popup-window hidden">
+		<div id="newContact-window" class="fullscreen-popup hidden">
 			<div class="app-title"><span class="app-title-span">MESSAGE</span></div>
 			<div class="message-content">
 				<br/>
@@ -191,7 +189,7 @@
 
 	<!-- APPEL ENTRANT -->
 	<div class="window-wrapper">
-		<div id="calling-window" class="popup-window hidden">
+		<div id="calling-window" class="fullscreen-popup hidden">
 			<div class="app-title"><span class="app-title-span">Rat</span></div>
 			<div class="message-content">
 				<img id="callerIMG" />
@@ -204,7 +202,7 @@
 
 	<!-- MESSAGE DE LOU -->
 	<div class="window-wrapper">
-		<div id="message-window" class="popup-window hidden">
+		<div id="message-window" class="fullscreen-popup hidden">
 			<div class="app-title">
 				<span class="app-title-span">MESSAGE</span>
 				<button class="window-close-cross" type="button" aria-label="Fermer" onclick="closeIt('message-window')">&times;</button>
@@ -218,7 +216,7 @@
 
 	<!-- MESSAGE PAS CALL -->
 	<div class="window-wrapper">
-		<div id="nocall-window" class="popup-window hidden">
+		<div id="nocall-window" class="fullscreen-popup hidden">
 			<div class="app-title">
 				<span class="app-title-span">...</span>
 				<button class="window-close-cross" type="button" aria-label="Fermer" onclick="closeIt('nocall-window')">&times;</button>
@@ -231,7 +229,7 @@
 
 	<!-- SOLUTION -->
 	<div class="window-wrapper">
-		<div id="solution-window" class="popup-window hidden">
+		<div id="solution-window" class="fullscreen-popup hidden">
 			<div class="app-title">
 				<span class="app-title-span">AIDE / SOLUTION</span>
 				<button class="window-close-cross" type="button" aria-label="Fermer" onclick="solutionClose('tips','spoiler', 'solution-window')">&times;</button>
@@ -252,7 +250,7 @@
 
 	<!-- CREDIT -->
 	<div class="window-wrapper">
-		<div id="credit-window" class="popup-window hidden">
+		<div id="credit-window" class="fullscreen-popup hidden">
 			<div class="app-title">
 				<span class="app-title-span">CREDITS</span>
 				<button class="window-close-cross" type="button" aria-label="Fermer" onclick="closeIt('credit-window')">&times;</button>
@@ -273,18 +271,14 @@
 	
 	<!-- overlay index du jeu-->
 	<div class="window-wrapper">
-		<div id="overlay-index">
-			<div class="container" id="container-homeMission">
-				<br/>
-					<h3 id="home-gameTitle"></h3>
-					<span id="home-gameDescription"></span>
-					<div id="div-homeMission">
-						<h3 id="home-mission"></h3>
-						<button id="overlay-btn" class="window-btn" onclick="closeOverlay('overlay-index')"></btn>
-					</div>
-					<video hidden id="vid-overlay" controls="true" autoplay="true" src="" style="text-align:center;max-width:750px;"></video>
-				</div>
+		<div id="overlay-index" class="fullscreen-popup overlay-popup">
+			<h3 id="home-gameTitle"></h3>
+			<span id="home-gameDescription"></span>
+			<div id="div-homeMission">
+				<h3 id="home-mission"></h3>
+				<button id="overlay-btn" class="window-btn" onclick="closeOverlay('overlay-index')"></button>
 			</div>
+			<video hidden id="vid-overlay" controls="true" autoplay="true" src="" style="text-align:center;max-width:750px;"></video>
 		</div>
 	</div>
 </body>

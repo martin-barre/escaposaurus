@@ -305,19 +305,15 @@ function openUdiskMediaWindow(src, title, mediaType){
 
 	var wrapper = document.createElement("div");
 	wrapper.classList.add("window-wrapper");
-	wrapper.style.pointerEvents = "none";
-	wrapper.style.backgroundColor = "transparent";
 
 	var win = document.createElement("div");
 	win.id = windowId;
 	win.setAttribute("data-udisk-src", src);
-	win.classList.add("dynamic-video-window");
+	win.classList.add("popup");
 	win.classList.add("udisk-media-window");
-	win.style.pointerEvents = "auto";
 
 	var titleDiv = document.createElement("div");
 	titleDiv.classList.add("app-title");
-	titleDiv.classList.add("dynamic-window-header");
 	var titleSpan = document.createElement("span");
 	titleSpan.classList.add("app-title-span");
 	titleSpan.innerHTML = title;
@@ -352,7 +348,6 @@ function openUdiskMediaWindow(src, title, mediaType){
 	wrapper.appendChild(win);
 	document.body.appendChild(wrapper);
 
-	positionDynamicVideoWindow(win, videoWindowCounter);
 	win.addEventListener("mousedown", function(){
 		bringVideoWindowToFront(win);
 	});
@@ -623,18 +618,14 @@ function openDynamicVideoWindow(title, src, vid){
 
 	var wrapper = document.createElement("div");
 	wrapper.classList.add("window-wrapper");
-	wrapper.style.pointerEvents = "none";
-	wrapper.style.backgroundColor = "transparent";
 
 	var win = document.createElement("div");
 	win.id = windowId;
 	win.classList.add("hidden");
-	win.classList.add("dynamic-video-window");
-	win.style.pointerEvents = "auto";
+	win.classList.add("fullscreen-popup");
 
 	var titleDiv = document.createElement("div");
 	titleDiv.classList.add("app-title");
-	titleDiv.classList.add("dynamic-window-header");
 	var titleSpan = document.createElement("span");
 	titleSpan.classList.add("app-title-span");
 	titleSpan.innerHTML = title;
@@ -665,26 +656,8 @@ function openDynamicVideoWindow(title, src, vid){
 	win.appendChild(closeBtn);
 	wrapper.appendChild(win);
 	document.body.appendChild(wrapper);
-	positionDynamicVideoWindow(win, videoWindowCounter);
 
-	win.addEventListener("mousedown", function(){
-		bringVideoWindowToFront(win);
-	});
-	titleDiv.addEventListener("mousedown", function(evt){
-		startWindowDrag(evt, win);
-	});
-	bringVideoWindowToFront(win);
 	openIt(windowId);
-}
-
-function positionDynamicVideoWindow(windowElem, idx){
-	var left = 40 + ((idx - 1) % 4) * 40;
-	var top = 80 + ((idx - 1) % 4) * 30;
-	windowElem.style.position = "absolute";
-	windowElem.style.left = left + "px";
-	windowElem.style.top = top + "px";
-	windowElem.style.maxWidth = "min(70vw, 720px)";
-	windowElem.style.maxHeight = "80vh";
 }
 
 function createWindowCloseButton(onClose){
@@ -698,6 +671,9 @@ function createWindowCloseButton(onClose){
 }
 
 function startWindowDrag(evt, windowElem){
+	if(!windowElem.classList.contains("popup") || evt.target.closest("button")){
+		return;
+	}
 	evt.preventDefault();
 	bringVideoWindowToFront(windowElem);
 	dragState = {
@@ -735,7 +711,7 @@ short func to display/hide stuff
 */
 function openIt(nameId){
 	var mainElt = document.getElementById(nameId);
-	if(mainElt && mainElt.classList && !mainElt.classList.contains("dynamic-video-window") && !mainElt.classList.contains("udisk-media-window")){
+	if(mainElt && mainElt.classList && !mainElt.classList.contains("popup")){
 		bringSystemWindowToFront(mainElt);
 	}
 	mainElt.style.animation = [animation.scaleIn, animation.fadeIn];

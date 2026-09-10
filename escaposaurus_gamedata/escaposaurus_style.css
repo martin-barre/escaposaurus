@@ -16,18 +16,18 @@
   box-sizing: border-box;
 }
 a {
-  color: #3DB956;
+  color: #5ca135;
   text-decoration: none;
   cursor: pointer;
 }
 a:hover {
-  color: #349547;
+  color: #73c444;
 }
 body {
   font-family: 'VT323', Arial, sans-serif;
   background: url(img/background.jpg) center center fixed;
   background-size: cover;
-  image-rendering: pixelated;
+  image-rendering: auto;
   height: 100vh;
   margin: 0;
   overflow: hidden;
@@ -39,6 +39,8 @@ body {
 
 video {
   object-fit: contain;
+  width: 100%;
+  height: 100%;
   max-width: min(65vw, 680px);
   max-height: min(60vh, 520px);
 }
@@ -220,7 +222,7 @@ video {
     rgba(140, 70, 20, 0.05) 8px
   ) !important;
   border: 4px solid #3e200c !important;
-  box-shadow: inset 4px 4px 0px 0px #FFF3D4, inset -4px -4px 0px 0px #c27f42, 0 8px 16px rgba(0,0,0,0.4) !important;
+  box-shadow: inset 0 0 0 2px #FFF3D4, inset 0 0 0 4px #c27f42, 0 8px 16px rgba(0,0,0,0.4) !important;
   border-radius: 0px !important;
 
   box-shadow: inset 4px 4px 0px rgba(255, 255, 255, 0.6), inset -4px -4px 0px rgba(139, 90, 43, 0.4), 0 10px 20px rgba(0, 0, 0, 0.4);
@@ -258,6 +260,8 @@ video {
   box-shadow: inset 3px 3px 0px 0px #FFF3D4, inset -3px -3px 0px 0px #c27f42;
   border-radius: 0px;
   margin-bottom: 4px;
+  width: 100%;
+  min-height: 62px;
   display: flex;
   align-items: center;
   padding: 6px;
@@ -274,6 +278,7 @@ video {
   object-fit: cover;
   width: 44px;
   height: 44px;
+  flex: 0 0 44px;
   margin-right: 15px;
   border: 2px solid #3e200c;
 }
@@ -334,18 +339,27 @@ video {
   justify-content: center;
 }
 
-#callVideo-window,
-#UIvid-window,
-#notnowPrompt-window,
-#passPrompt-window,
-#wrongPassword,
-#newContact-window,
-#calling-window,
-#message-window,
-#nocall-window,
-#solution-window,
-#credit-window {
-  
+#overlay-index #home-gameTitle {
+  width: auto;
+  margin: 0 0 1rem;
+  font-size: clamp(42px, 6vw, 78px);
+  line-height: 1.05;
+}
+
+#overlay-index #home-gameDescription {
+  max-width: 760px;
+  font-size: 24px;
+  line-height: 1.25;
+}
+
+#overlay-index #overlay-btn {
+  font-size: 2rem;
+  padding: 12px 30px;
+  margin-top: 10px;
+}
+
+.popup,
+.fullscreen-popup {
   background-color: #ffebd2 !important;
   background-image: repeating-linear-gradient(
     180deg,
@@ -358,7 +372,7 @@ video {
   box-shadow: inset 4px 4px 0px 0px #FFF3D4, inset -4px -4px 0px 0px #c27f42, 0 8px 16px rgba(0,0,0,0.4) !important;
   border-radius: 0px !important;
 
-  box-shadow: inset 4px 4px 0px rgba(255, 255, 255, 0.6), inset -4px -4px 0px rgba(139, 90, 43, 0.4), 0 10px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.6), inset 0 0 0 4px rgba(139, 90, 43, 0.4), 0 10px 20px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -366,50 +380,23 @@ video {
   animation: barnPop 600ms ease-out forwards;
 }
 
-#callVideo-window,
-#UIvid-window {
+.popup,
+.fullscreen-popup {
   z-index: 305;
 }
 
 #callVideo-content {
-  padding: 1rem;
+  padding: 2rem;
   max-width: 100%;
   max-height: calc(80vh - 100px);
   overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-#notnowPrompt-window,
-#passPrompt-window,
-#wrongPassword,
-#newContact-window,
-#calling-window,
-#message-window,
-#nocall-window,
-#solution-window,
-#credit-window {
-  z-index: 300;
-  width: 250px;
-}
-
-#solution-window {
-  width: 450px;
-}
-
-#credit-window {
-  width: 450px;
-}
-
-#notnowPrompt-window button,
-#passPrompt-window button,
-#wrongPassword button,
-#newContact-window button,
-#UIvid-window button,
-#callVideo-window button,
-#calling-window button,
-#message-window button,
-#nocall-window button,
-#solution-window button,
-#credit-window button,
+.popup button,
+.fullscreen-popup button,
 #overlay-index button,
 .footer-button {
   font-family: 'VT323', Odibee, monospace;
@@ -426,17 +413,8 @@ video {
   text-shadow: 1px 1px 0px #000;
 }
 
-#notnowPrompt-window button:hover,
-#passPrompt-window button:hover,
-#wrongPassword button:hover,
-#newContact-window button:hover,
-#UIvid-window button:hover,
-#callVideo-window button:hover,
-#calling-window button:hover,
-#message-window button:hover,
-#nocall-window button:hover,
-#solution-window button:hover,
-#credit-window button:hover,
+.popup button:hover,
+.fullscreen-popup button:hover,
 #overlay-index button:hover,
 .footer-button:hover {
   background: #73c444;
@@ -444,28 +422,24 @@ video {
   box-shadow: inset 2px 2px 0px rgba(255,255,255,0.5), inset -2px -2px 0px rgba(0,0,0,0.2), 0px 6px 0px #365e1d;
 }
 
-#notnowPrompt-window button:active,
-#passPrompt-window button:active,
-#wrongPassword button:active,
-#newContact-window button:active,
-#UIvid-window button:active,
-#callVideo-window button:active,
-#calling-window button:active,
-#message-window button:active,
-#nocall-window button:active,
-#solution-window button:active,
-#credit-window button:active,
+.popup button:active,
+.fullscreen-popup button:active,
 #overlay-index button:active,
 .footer-button:active {
   transform: translateY(4px);
   box-shadow: inset 2px 2px 0px rgba(0,0,0,0.3), 0px 0px 0px #365e1d;
 }
 
+#footer .footer-button {
+  font-size: 1.7rem;
+  padding: 7px 18px;
+}
+
 .message-content {
   text-align: center;
   color: #5c3516; /* Wood text */
   font-size: 20px;
-  padding: 15px;
+  padding: 2rem;
 }
 
 #passwordInput {
@@ -492,7 +466,7 @@ video {
   align-items: center;
   justify-content: center;
   gap: 15px;
-  padding: 20px 0 10px 0;
+  padding: 10px 0 20px 0;
   z-index: 1000;
   transform: translateY(calc(100% - 10px));
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -501,14 +475,14 @@ video {
 #footer::before {
   content: " === MENU === ";
   position: absolute;
-  top: -24px;
+  top: -27px;
   left: 50%;
   transform: translateX(-50%);
   background: #5c3516;
   color: #fff;
   padding: 2px 20px;
   font-family: 'VT323', monospace;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   cursor: pointer;
@@ -516,7 +490,7 @@ video {
 }
 
 #footer:hover {
-  transform: translateY(0);
+  transform: translateY(10px);
 }
 
 #password {
@@ -608,43 +582,67 @@ ul {
   display: none;
 }
 
-.dynamic-video-window {
-  
-  background-color: #ffebd2 !important;
-  background-image: repeating-linear-gradient(
-    180deg,
-    rgba(0,0,0,0),
-    rgba(0,0,0,0) 4px,
-    rgba(140, 70, 20, 0.05) 4px,
-    rgba(140, 70, 20, 0.05) 8px
-  ) !important;
-  border: 4px solid #3e200c !important;
-  box-shadow: inset 4px 4px 0px 0px #FFF3D4, inset -4px -4px 0px 0px #c27f42, 0 8px 16px rgba(0,0,0,0.4) !important;
-  border-radius: 0px !important;
-
-  border-radius: 8px;
-  background-color: #ffebd2;
+/* Two popup modes share the same frame and controls. */
+.popup,
+.fullscreen-popup {
+  position: relative;
+  width: fit-content;
+  min-width: min(250px, calc(100vw - 32px));
+  height: fit-content;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 32px);
   overflow: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  resize: none;
-  min-width: 320px;
-  min-height: 220px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  pointer-events: auto;
 }
 
-.dynamic-window-header {
+.fullscreen-popup.overlay-popup {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  max-width: none;
+  max-height: none;
+  border: 0 !important;
+  padding: 20px;
+}
+
+.fullscreen-popup {
+  width: min-content;
+  height: min-content;
+}
+
+.window-wrapper:has(> .popup) {
+  background: transparent;
+  pointer-events: none;
+}
+
+.window-wrapper:has(> .fullscreen-popup) {
+  position: fixed;
+  inset: 0;
+}
+
+.popup > .app-title,
+.fullscreen-popup > .app-title {
+  flex-shrink: 0;
+  padding: 0 65px;
+  min-height: 50px;
+  height: auto;
+}
+
+.popup > .app-title {
   cursor: move;
   user-select: none;
-  background: #a66a38;
-  width: 100%;
-  border-bottom: 4px solid #5c3516;
+}
+
+.popup video,
+.fullscreen-popup video {
+  object-fit: contain;
 }
 
 .dynamic-video-content {
   width: 100%;
-  padding: 1rem;
+  max-width: calc(100vw - 64px);
+  max-height: calc(100vh - 120px);
+  padding: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -656,8 +654,10 @@ ul {
 }
 
 .udisk-media-window {
-  width: min(70vw, 900px);
-  height: min(75vh, 700px);
+  width: fit-content;
+  height: fit-content;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 32px);
   overflow: hidden;
 }
 
@@ -665,8 +665,8 @@ ul {
   display: block;
   width: auto;
   height: auto;
-  max-width: 100%;
-  max-height: 100%;
+  max-width: calc(100vw - 80px);
+  max-height: calc(100vh - 220px);
   margin: 0 auto;
   object-fit: contain;
 }
@@ -681,23 +681,31 @@ ul {
   position: absolute;
   top: 11px;
   right: 12px;
-  width: 28px;
-  height: 28px;
-  line-height: 24px;
-  padding: 0;
-  margin: 0;
-  border-radius: 4px;
-  font-size: 24px;
+  width: 30px !important;
+  height: 30px !important;
+  line-height: 24px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 6px !important;
+  font-family: Arial, sans-serif;
+  font-size: 22px;
   font-weight: bold;
   text-align: center;
   z-index: 2;
-  background: #e74c3c;
-  color: white;
-  border: 2px solid #c0392b;
+  background: #c0392b !important;
+  color: #fff !important;
+  border: 2px solid #7f241c !important;
   cursor: pointer;
+  box-shadow: none !important;
+  transform: none !important;
+  text-shadow: none !important;
+  transition: none !important;
 }
 .window-close-cross:hover {
-  background: #c0392b;
+  background: #e74c3c !important;
+}
+.window-close-cross:active {
+  background: #a93226 !important;
 }
 
 .lightbox-image {
@@ -765,4 +773,9 @@ ul {
   border: 4px solid #3e200c;
   border-radius: 4px;
   box-shadow: inset 2px 2px 0px rgba(255,255,255,0.4), 0 4px 8px rgba(0,0,0,0.3);
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 180px);
+  object-fit: contain;
 }
