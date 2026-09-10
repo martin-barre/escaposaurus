@@ -50,7 +50,7 @@ var udiskData = {
         sequence: 0,
         files: [
           "cuterie_charles.png",
-          "facture.png",
+          "kidnapping_mouton.png",
           "memo_fermier.png",
           "sifflet.mp4",
         ],
@@ -211,15 +211,14 @@ tips["Albert"][3] =
 
 /*text for the instruction / solution windows*/
 var instructionText = {};
-instructionText.winState =
-  "Vous avez retrouvé l'id GPS et vous pouvez appeler les secours du secteur.";
+instructionText.winState = "Vous avez réussi à quitter l'enclos et vous pouvez maintenant discuter avec le rat.";
 instructionText.lackMainHint = "";
 instructionText.password =
   "Vous devez trouver et entrer le mot de passe d'un des dossiers de la boite de droite. Vous pouvez trouver le mot de passe en appelant les contacts de la boite de gauche.<br/>Pour entrer un mot de passe, cliquez sur le nom d'un dossier et une fenêtre s'affichera pour que vous puissiez donner le mot de passe.";
 
 /*please note the %s into the text that allow to automatically replace them with the right content according to which sequence the player is in*/
 var solutionText = {};
-solutionText.winState = "Si Sabine a été secourue, le jeu est fini bravo.";
+solutionText.winState = "Si vous êtes sorti de l'enclos, le jeu est fini bravo.";
 solutionText.lackMainHint = "Vous devez ouvrir le fichier <b>%s</b><br/>";
 solutionText.password =
   "Vous devez déverouiller le lieu <b>%s1</b><br/>avec le mot de passe : <b>%s2</b><br/>";
