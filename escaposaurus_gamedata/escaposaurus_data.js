@@ -206,7 +206,7 @@ var instructionText = {};
 instructionText.winState = "Vous avez réussi à quitter l'enclos et vous pouvez maintenant discuter avec le rat.";
 instructionText.lackMainHint = "";
 instructionText.password =
-  "Vous devez trouver et entrer le mot de passe d'un des dossiers de la boite de droite. Vous pouvez trouver le mot de passe en appelant les contacts de la boite de gauche.<br/>Pour entrer un mot de passe, cliquez sur le nom d'un dossier et une fenêtre s'affichera pour que vous puissiez donner le mot de passe.";
+  "Vous devez trouver et entrer le mot de passe d'un des dossiers de la boite de droite.<br/>Vous pouvez trouver le mot de passe en appelant les contacts de la boite de gauche.<br/>Pour entrer un mot de passe, cliquez sur le nom d'un dossier et une fenêtre s'affichera <br/>pour que vous puissiez donner le mot de passe.";
 
 /*please note the %s into the text that allow to automatically replace them with the right content according to which sequence the player is in*/
 var solutionText = {};
