@@ -39,9 +39,9 @@ var udiskData = {
         foldername: "Grange",
         files: [
           "cloture.png",
-          "mouton.png",
           "moutons.png",
           "paille.png",
+          "sujet_test.png",
         ],
       },
       {
@@ -49,6 +49,7 @@ var udiskData = {
         password: "134410426769",
         sequence: 0,
         files: [
+          "chien.mp4",
           "cuterie_charles.png",
           "kidnapping_mouton.png",
           "memo_fermier.png",
