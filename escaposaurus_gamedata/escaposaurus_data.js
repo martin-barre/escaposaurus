@@ -46,7 +46,7 @@ var udiskData = {
       },
       {
         foldername: "Hangar",
-        password: "134410426769",
+        password: "394297",
         sequence: 0,
         files: [
           "chien.mp4",
@@ -58,7 +58,7 @@ var udiskData = {
       },
       {
         foldername: "Chien",
-        password: "01001",
+        password: "01011",
         sequence: 1,
         files: [
           "code_morse.png",
