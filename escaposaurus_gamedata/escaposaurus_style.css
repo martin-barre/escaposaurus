@@ -114,6 +114,7 @@ video {
 }
 
 #div-homeMission {
+  text-align: justify;
   padding: 4rem;
   margin: 4rem;
   background-color: #ffebd2;
