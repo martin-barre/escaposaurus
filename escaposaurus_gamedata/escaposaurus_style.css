@@ -33,7 +33,7 @@ a:hover {
 }
 body {
   font-family: VT323, Arial, sans-serif;
-  background: url(img/background.jpg) center center fixed;
+  background: url(img/background.png) center center fixed;
   background-size: cover;
   image-rendering: auto;
   height: 100vh;
@@ -61,7 +61,6 @@ video {
   height: 100%;
   text-align: center;
   position: relative;
-  background: rgba(120, 170, 88, 0.4);
   overflow: hidden;
 }
 
@@ -145,8 +144,8 @@ video {
 
 #home-gameTitle,
 #os-name {
-  width: 450px;
-  color: white;
+  width: 470px;
+  color: #4e3a2f;
   font-size: 34px;
   font-family: Woodcut;
   text-transform: uppercase;
@@ -330,9 +329,10 @@ video {
 }
 
 #overlay-index #home-gameTitle {
-  width: 620px;
-  margin: 4rem 0;
+  width: 650px;
+  margin: 5rem 0 3rem 0;
   font-size: 48px;
+  color: #4e3a2f;
 }
 
 #overlay-index #overlay-btn {
@@ -617,6 +617,7 @@ ul {
   background-color: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(32px);
   -webkit-backdrop-filter: blur(8px);
+  background: url(img/background-overlay.png) center center fixed;
 }
 
 .popup > .app-title,
