@@ -20,6 +20,42 @@ var videoWindowCounter = 0;
 var topVideoWindowZIndex = 1000;
 var dragState = null;
 var openedUdiskWindows = {};
+// One ambience player for the entire page, including the welcome screen.
+var ambientSound = null;
+
+function initializeAmbientSound(){
+	if(ambientSound !== null){ return; }
+	ambientSound = new Audio(ambientSoundPath);
+	ambientSound.loop = true;
+	ambientSound.volume = ambientSoundVolume;
+
+	function removeRetryListeners(){
+		document.removeEventListener('click', playAmbientSound);
+		document.removeEventListener('keydown', playAmbientSound);
+	}
+
+	function handlePlaybackError(error){
+		if(error.name === 'NotAllowedError'){
+			document.addEventListener('click', playAmbientSound);
+			document.addEventListener('keydown', playAmbientSound);
+		}else{
+			removeRetryListeners();
+			console.warn('Unable to play background ambience:', error);
+		}
+	}
+
+	function playAmbientSound(){
+		try{
+			ambientSound.play().then(removeRetryListeners, handlePlaybackError);
+		}catch(error){
+			handlePlaybackError(error);
+		}
+	}
+
+	playAmbientSound();
+}
+
+document.addEventListener('DOMContentLoaded', initializeAmbientSound, { once: true });
 
 
 /*

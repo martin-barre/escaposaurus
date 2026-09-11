@@ -16,6 +16,10 @@ var gameRoot = "./";
 var gameDataRoot = gameRoot + "escaposaurus_gamedata/";
 var videoRoot = gameDataRoot + "videos/";
 
+// background ambience
+var ambientSoundPath = gameDataRoot + "img/sound_ambient.mp3";
+var ambientSoundVolume = 0.25;
+
 // caller app
 var contactVideoRoot = videoRoot + "contactVideo/";
 
