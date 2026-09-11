@@ -43,13 +43,12 @@ var backgroundParallaxLayers = [
     });
     document.body.prepend(container);
 
-    var motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
     var mouseAvailable = window.matchMedia("(hover: hover) and (pointer: fine)");
     var targetX = 0, targetY = 0, currentX = 0, currentY = 0;
     var frame = null, lastTime = null;
 
     function enabled() {
-      return !motionPreference.matches && mouseAvailable.matches && !document.hidden;
+      return mouseAvailable.matches && !document.hidden;
     }
 
     function render() {
@@ -104,7 +103,6 @@ var backgroundParallaxLayers = [
     window.addEventListener("blur", recenter);
     window.addEventListener("resize", recenter);
     document.addEventListener("visibilitychange", reset);
-    motionPreference.addEventListener("change", reset);
     mouseAvailable.addEventListener("change", reset);
   }
 
