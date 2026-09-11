@@ -33,12 +33,30 @@ a:hover {
 }
 body {
   font-family: VT323, Arial, sans-serif;
-  background: url(img/background.png) center center fixed;
+  background: #e1bb78 url(img/background1.png) center center fixed;
   background-size: cover;
   image-rendering: auto;
   height: 100vh;
   margin: 0;
   overflow: hidden;
+  isolation: isolate;
+}
+
+.parallax-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.parallax-background__layer {
+  position: absolute;
+  /* Common overscan preserves alignment and covers the maximum 28px movement. */
+  inset: -32px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .lightbox-container {

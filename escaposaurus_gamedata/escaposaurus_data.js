@@ -16,6 +16,105 @@ var gameRoot = "./";
 var gameDataRoot = gameRoot + "escaposaurus_gamedata/";
 var videoRoot = gameDataRoot + "videos/";
 
+// Back to front. Foreground PNGs need transparency and matching dimensions.
+// Keep amplitudes below the shared 32px overscan in escaposaurus_style.css.
+var backgroundParallaxLayers = [
+  { image: "background1.png", amplitude: 8 },
+  { image: "background2.png", amplitude: 16 },
+  { image: "background3.png", amplitude: 28 },
+  { image: "background4.png", amplitude: 32 },
+  { image: "background5.png", amplitude: 38 },
+];
+
+(function () {
+  function initBackgroundParallax() {
+    if (document.getElementById("parallax-background")) return;
+
+    var container = document.createElement("div");
+    container.id = "parallax-background";
+    container.className = "parallax-background";
+    container.setAttribute("aria-hidden", "true");
+    var layers = backgroundParallaxLayers.map(function (config) {
+      var element = document.createElement("div");
+      element.className = "parallax-background__layer";
+      element.style.backgroundImage = 'url("' + gameDataRoot + "img/" + config.image + '")';
+      container.appendChild(element);
+      return { element: element, amplitude: config.amplitude };
+    });
+    document.body.prepend(container);
+
+    var motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var mouseAvailable = window.matchMedia("(hover: hover) and (pointer: fine)");
+    var targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+    var frame = null, lastTime = null;
+
+    function enabled() {
+      return !motionPreference.matches && mouseAvailable.matches && !document.hidden;
+    }
+
+    function render() {
+      layers.forEach(function (layer) {
+        layer.element.style.transform = "translate3d(" +
+          (-currentX * layer.amplitude) + "px, " +
+          (-currentY * layer.amplitude) + "px, 0) scale(1.02)";
+      });
+    }
+
+    function animate(time) {
+      frame = null;
+      if (!enabled()) return;
+      var elapsed = lastTime === null ? 16.67 : Math.min(time - lastTime, 64);
+      lastTime = time;
+      var blend = 1 - Math.exp(-elapsed / 100);
+      currentX += (targetX - currentX) * blend;
+      currentY += (targetY - currentY) * blend;
+      if (Math.abs(targetX - currentX) < 0.001 && Math.abs(targetY - currentY) < 0.001) {
+        currentX = targetX;
+        currentY = targetY;
+        lastTime = null;
+      } else {
+        frame = window.requestAnimationFrame(animate);
+      }
+      render();
+    }
+
+    function schedule() {
+      if (enabled() && frame === null) frame = window.requestAnimationFrame(animate);
+    }
+
+    function recenter() {
+      targetX = targetY = 0;
+      schedule();
+    }
+
+    function reset() {
+      if (frame !== null) window.cancelAnimationFrame(frame);
+      frame = lastTime = null;
+      targetX = targetY = currentX = currentY = 0;
+      render();
+    }
+
+    window.addEventListener("pointermove", function (event) {
+      if (event.pointerType !== "mouse" || !enabled()) return;
+      targetX = Math.max(-1, Math.min(1, event.clientX / window.innerWidth * 2 - 1));
+      targetY = Math.max(-1, Math.min(1, event.clientY / window.innerHeight * 2 - 1));
+      schedule();
+    }, { passive: true });
+    document.documentElement.addEventListener("pointerleave", recenter);
+    window.addEventListener("blur", recenter);
+    window.addEventListener("resize", recenter);
+    document.addEventListener("visibilitychange", reset);
+    motionPreference.addEventListener("change", reset);
+    mouseAvailable.addEventListener("change", reset);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initBackgroundParallax, { once: true });
+  } else {
+    initBackgroundParallax();
+  }
+})();
+
 // background ambience
 var ambientSoundPath = gameDataRoot + "img/sound_ambient.mp3";
 var ambientSoundVolume = 0.25;
